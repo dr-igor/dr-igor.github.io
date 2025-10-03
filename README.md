@@ -18,6 +18,21 @@ Features:
 
 ## Development
 
+### Using just (recommended)
+
+If you have [just](https://github.com/casey/just) installed:
+
+```bash
+just install    # Install dependencies
+just dev        # Start development server
+just dev-host   # Start dev server with network access
+just build      # Build for production
+just preview    # Preview production build
+just lint       # Run linter
+```
+
+### Using npm directly
+
 ```bash
 npm install
 npm run dev
