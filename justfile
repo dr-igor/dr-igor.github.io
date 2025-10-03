@@ -2,6 +2,9 @@
 
 # Install dependencies
 install:
+    npm ci
+
+install-update:
     npm install
 
 # Start development server
