@@ -1,6 +1,6 @@
 function About() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-neutral-900 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-950 dark:to-neutral-950 transition-colors duration-300">
       <div className="max-w-4xl mx-auto px-4 py-16">
         <h1 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-purple-700 via-purple-600 to-amber-600 dark:from-purple-400 dark:via-purple-300 dark:to-amber-400 bg-clip-text text-transparent" style={{ fontFamily: "'Anta', sans-serif" }}>
           About Me
