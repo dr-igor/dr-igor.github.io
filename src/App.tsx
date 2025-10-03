@@ -25,7 +25,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-950 dark:to-neutral-950 transition-colors duration-300">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-neutral-900 transition-colors duration-300">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         
         <div className="pt-16">
