@@ -54,6 +54,16 @@ function Navbar({ darkMode, setDarkMode }: NavbarProps) {
             >
               About
             </Link>
+            <Link
+              to="/articles"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname.startsWith('/articles')
+                  ? 'text-purple-700 dark:text-purple-400'
+                  : 'text-gray-600 dark:text-gray-300 hover:text-purple-700 dark:hover:text-purple-400'
+              }`}
+            >
+              Articles
+            </Link>
           </div>
 
           {/* Right: Theme Toggle */}

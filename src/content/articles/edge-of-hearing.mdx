@@ -1,0 +1,74 @@
+export const frontmatter = {
+  title: "Spatial Audio: Cues, Computation, and Concepts",
+  description: "An interactive exploration of how our brains process spatial audio, from biological mechanisms to computational models",
+  date: "2025-01-15",
+  slug: "edge-of-hearing"
+}
+
+import SpatialAudioExplainer from '../../components/SpatialAudioExplainer'
+
+# Spatial Audio: Cues, Computation, and Concepts
+
+The human auditory system processes spatial information through a sophisticated hierarchy of cues, with some being far more powerful than others. Understanding this hierarchy is crucial for audio engineers, researchers, and anyone working with spatial audio technologies.
+
+<SpatialAudioExplainer />
+
+## The Hierarchy That Rules All
+
+When your brain receives conflicting spatial information from different cues, it doesn't simply "average" them or fail randomly. Instead, it follows a strict hierarchy that has been refined over millions of years of evolution. At the top of this hierarchy sits **harmonicity**—the mathematical relationship between frequencies that indicates they originate from the same physical source.
+
+This dominance of harmonicity explains why a violin remains perceptually unified even when processed through complex stereo effects that might confuse spatial cues. The harmonic relationships between the fundamental frequency and its overtones create such a strong binding force that the brain will maintain source unity even when left and right channels contain conflicting spatial information.
+
+### Beyond Simple Left-Right: The Full Spatial Picture
+
+While most people think of stereo in terms of left-right positioning, true spatial audio requires encoding elevation, distance, and even the acoustic properties of the surrounding environment. This is where **Head-Related Transfer Functions (HRTFs)** become crucial. Your outer ears (pinnae) aren't just decorative—their complex, asymmetric geometry creates unique spectral fingerprints for sounds arriving from different directions.
+
+The most important spectral cues for elevation occur in the 6-10 kHz range, where the pinna creates frequency-dependent reflections. A sound from above creates different interference patterns than one from below, resulting in characteristic spectral notches that your brain has learned to interpret as "up" or "down." This is why spatial audio systems require high sample rates (48 kHz minimum, 96 kHz preferred) and why most people can't accurately localize sounds through small earbuds that don't preserve these high-frequency cues.
+
+## When Spatial Illusions Break Down
+
+The breakdown of spatial illusions follows predictable patterns. **Phase manipulation** creates some of the most dramatic disruptions—complete polarity inversion (180° phase shift) in one channel causes frequency-dependent cancellation that makes sounds appear "twisted inside the head" with headphones. The bass response reduces dramatically, sounds become muffled and diffuse, and the normal stereo image collapses.
+
+**Decorrelation** between channels creates a different type of breakdown. As the similarity between left and right channels decreases, spatial precision degrades progressively:
+
+- **Above 0.7 correlation**: Narrow, well-localized sources
+- **0.3-0.7 correlation**: Single sources with increasing width and diffuseness  
+- **Below 0.3 correlation**: Severely compromised localization
+- **Near-zero correlation**: Maximal spatial extent and "envelopment"
+
+This progression isn't a failure—it's the auditory system constructively interpreting statistical properties of sound fields. Concert halls exploit this by controlling early lateral reflections to achieve optimal correlation values around 0.3-0.4, balancing clarity against spaciousness.
+
+## Computational Detection of Spatial States
+
+Modern spatial audio systems need to detect when spatial illusions are working or failing. This requires multiple analysis techniques working together:
+
+**Interaural Cross-Correlation (IACC)** provides the foundation, measuring similarity between left and right channels across frequency bands. Values above 0.8 indicate very narrow stereo images approaching mono, while values below 0.4 suggest wide images that may signal decorrelation problems.
+
+**Spectrotemporal modulation analysis** goes deeper, decomposing signals into patterns that reveal how different frequency regions modulate over time. Speech shows characteristic modulations at 3-8 Hz (syllable rate) and 4-8 cycles/octave (formant structure), while music displays different distributions. When these patterns diverge between stereo channels, it signals potential source segregation.
+
+**Mid-side (M/S) analysis** provides elegant source separation by transforming stereo into center-panned content (Mid) and stereo difference (Side). The ratio between these components reveals source distribution and can flag sudden changes that indicate source transitions.
+
+## Practical Thresholds for Real-World Applications
+
+Understanding the specific boundaries where perception shifts from one state to another enables practical applications:
+
+- **Pitch fusion**: Frequency disparities of 150-500 Hz at 2 kHz reference maintain single pitch percepts
+- **Temporal fusion**: Complete spatial fusion occurs for delays under 1-2 milliseconds
+- **Echo thresholds**: Listeners first perceive two distinct events at 5-30 milliseconds baseline
+- **Precedence effect**: Dominates from 2-50 milliseconds for speech, extending to 100 ms for music
+
+These thresholds inform everything from concert hall design to virtual reality audio systems to hearing aid algorithms.
+
+## The Future of Spatial Audio
+
+The convergence of psychoacoustic research, computational modeling, and practical audio engineering creates opportunities for next-generation spatial audio technologies:
+
+**Personalized HRTF systems** could use machine learning to customize spatial audio from brief measurements or even photos, addressing the 15-30% front-back confusion rates that plague generic systems.
+
+**Perceptual-based source separation** algorithms could use temporal coherence rather than statistical independence as the segregation principle, better matching how the auditory system actually works.
+
+**Real-time spatial quality assessment** could detect when processing artifacts cross perceptual boundaries, informing mixing and mastering practices to predict when processing creates unnatural spatial fragmentation.
+
+The fundamental insight driving all these applications is that spatial perception emerges not from passive acoustic measurement but from active perceptual inference. The brain constructs the most probable scene interpretation given available cues, prior expectations about natural sound statistics, and task demands. Understanding this inference process—with its hierarchies, thresholds, and breakdown patterns—provides the foundation for creating both compelling spatial illusions and systems that know when those illusions are working.
+
+*This interactive exploration continues to evolve as our understanding of spatial audio perception advances. The computational frameworks presented here bridge the gap between biological mechanisms and practical audio technologies.*
