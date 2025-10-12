@@ -13,6 +13,7 @@
         sessionStorage.setItem('redirect', location.pathname + location.search + location.hash);
       } catch (e) {
         // Ignore sessionStorage errors (privacy mode, quota exceeded, etc.)
+        // Redirect will still work but without path restoration
       }
       location.replace('/');
     </script>
