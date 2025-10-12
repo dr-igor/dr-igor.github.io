@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Igor Labworks - igorlabworks.com</title>
+    <script>
+      // GitHub Pages SPA redirect solution
+      // Store the current path in sessionStorage and redirect to index.html
+      // The index.html will check sessionStorage and restore the path
+      try {
+        sessionStorage.setItem('redirect', location.pathname + location.search + location.hash);
+      } catch (e) {
+        // Ignore sessionStorage errors (privacy mode, quota exceeded, etc.)
+        // Redirect will still work but without path restoration
+      }
+      location.replace('/');
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
