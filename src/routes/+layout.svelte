@@ -10,7 +10,7 @@
   <footer
     class="pointer-events-none fixed bottom-6 left-0 right-0 text-center text-sm text-gray-600 dark:text-gray-400"
   >
-    <p>2025 © Igor Petrik</p>
+    <p>2025-2026 © Igor Petrik</p>
   </footer>
 </div>
 

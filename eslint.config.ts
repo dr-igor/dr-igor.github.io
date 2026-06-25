@@ -1,4 +1,4 @@
-import base from "@igor/eslint-config-typescript"
+import base from "@igorlabworks/eslint-config-typescript"
 import svelte from "eslint-plugin-svelte"
 import globals from "globals"
 import svelteParser from "svelte-eslint-parser"

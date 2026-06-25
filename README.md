@@ -60,5 +60,4 @@ npm run dev
 
 ## Build output
 
-The prerendered site is written to the `build` directory, ready for deployment to
-GitHub Pages (custom domain configured via `static/CNAME`).
+The prerendered site is written to the `build` directory, ready for deployment to GitHub Pages (custom domain configured via `static/CNAME`).

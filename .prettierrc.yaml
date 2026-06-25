@@ -8,3 +8,7 @@ overrides:
   - files: "*.svelte"
     options:
       parser: svelte
+  - files: "*.{md,svx}"
+    options:
+      parser: markdown
+      proseWrap: never
