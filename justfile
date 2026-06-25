@@ -27,9 +27,21 @@ preview:
 lint:
     npm run lint
 
+# Type-check with svelte-check
+check:
+    npm run check
+
+# Run the test suite
+test:
+    npm test
+
+# Format with Prettier
+format:
+    npm run format
+
 # Clean build artifacts
 clean:
-    rm -rf dist node_modules
+    rm -rf build .svelte-kit node_modules
 
 # Full clean and reinstall
 reset: clean install

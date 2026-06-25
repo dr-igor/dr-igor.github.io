@@ -1,2 +1,10 @@
 semi: false
 printWidth: 88
+plugins:
+  - prettier-plugin-svelte
+  - prettier-plugin-tailwindcss
+svelteSortOrder: options-markup-scripts-styles
+overrides:
+  - files: "*.svelte"
+    options:
+      parser: svelte
