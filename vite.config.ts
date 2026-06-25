@@ -1,18 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import mdx from '@mdx-js/rollup'
-import remarkGfm from 'remark-gfm'
-import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { sveltekit } from "@sveltejs/kit/vite"
+import tailwindcss from "@tailwindcss/vite"
+import { svelteTesting } from "@testing-library/svelte/vite"
+import { defineConfig } from "vitest/config"
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    { enforce: 'pre', ...mdx({
-      remarkPlugins: [remarkGfm],
-      rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
-    }) },
-    react(),
-  ],
-  base: '/',
+  plugins: [tailwindcss(), sveltekit(), svelteTesting()],
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./src/vitest-setup.ts"],
+  },
 })
