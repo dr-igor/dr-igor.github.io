@@ -15,12 +15,13 @@
 </div>
 
 <script lang="ts">
+  import type { Snippet } from "svelte"
   import "../app.css"
   import Navbar from "$lib/components/Navbar.svelte"
   import { createSmoothScroll } from "$lib/lenis"
   import { scroll } from "$lib/stores/scroll.svelte"
 
-  let { children } = $props()
+  let { children }: { children: Snippet } = $props()
 
   $effect(() => createSmoothScroll((y, progress) => scroll.set(y, progress)))
 </script>

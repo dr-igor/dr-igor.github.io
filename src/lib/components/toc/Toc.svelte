@@ -1,18 +1,18 @@
 {#if allHeadings.length > 1}
   {@render desktopRail()}
   {@render mobileTrigger()}
-  {#if drawerOpen}
+  {#if isDrawerOpen}
     {@render mobileDrawer()}
   {/if}
 {/if}
 
 {#snippet desktopRail()}
-  <aside class="hidden shrink-0 lg:block {collapsed ? 'w-10' : 'w-56'}">
+  <aside class="hidden shrink-0 lg:block {isCollapsed ? 'w-10' : 'w-56'}">
     <div class="sticky top-20">
-      {#if collapsed}
+      {#if isCollapsed}
         <button
           type="button"
-          onclick={() => (collapsed = false)}
+          onclick={() => (isCollapsed = false)}
           aria-expanded="false"
           aria-label="Expand table of contents"
           class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white/60 text-gray-500 transition-colors hover:border-purple-500 hover:text-purple-600 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-gray-400 dark:hover:border-purple-400 dark:hover:text-purple-400"
@@ -33,7 +33,7 @@
             </span>
             <button
               type="button"
-              onclick={() => (collapsed = true)}
+              onclick={() => (isCollapsed = true)}
               aria-expanded="true"
               aria-label="Collapse table of contents"
               class="flex h-6 w-6 items-center justify-center rounded text-gray-400 transition-colors hover:text-purple-600 dark:text-gray-500 dark:hover:text-purple-400"
@@ -52,9 +52,9 @@
 {#snippet mobileTrigger()}
   <button
     type="button"
-    onclick={() => (drawerOpen = true)}
+    onclick={() => (isDrawerOpen = true)}
     aria-controls="toc-drawer"
-    aria-expanded={drawerOpen}
+    aria-expanded={isDrawerOpen}
     class="sticky top-16 z-30 mb-6 flex items-center gap-2 rounded-lg border border-gray-200 bg-white/80 px-3 py-2 text-sm font-medium text-gray-600 backdrop-blur-sm transition-colors hover:text-purple-600 lg:hidden dark:border-zinc-800 dark:bg-zinc-950/80 dark:text-gray-300 dark:hover:text-purple-400"
   >
     <List class="h-4 w-4" aria-hidden="true" />
@@ -72,7 +72,7 @@
     <button
       type="button"
       aria-label="Close table of contents"
-      onclick={() => (drawerOpen = false)}
+      onclick={() => (isDrawerOpen = false)}
       class="absolute inset-0 bg-black/40"
       transition:fade={{ duration: 150 }}
     ></button>
@@ -92,7 +92,7 @@
         </span>
         <button
           type="button"
-          onclick={() => (drawerOpen = false)}
+          onclick={() => (isDrawerOpen = false)}
           aria-label="Close table of contents"
           class="flex h-6 w-6 items-center justify-center rounded text-gray-400 transition-colors hover:text-purple-600 dark:text-gray-500 dark:hover:text-purple-400"
         >
@@ -209,8 +209,8 @@
   )
 
   let activeId = $state<string | undefined>(undefined)
-  let collapsed = $state(browser && localStorage.getItem("toc-collapsed") === "true")
-  let drawerOpen = $state(false)
+  let isCollapsed = $state(browser && localStorage.getItem("toc-collapsed") === "true")
+  let isDrawerOpen = $state(false)
   let drawerEl = $state<HTMLElement | undefined>(undefined)
 
   function setDepth(next: number): void {
@@ -221,7 +221,7 @@
   function goTo(event: MouseEvent, id: string): void {
     event.preventDefault()
     activeId = id
-    drawerOpen = false
+    isDrawerOpen = false
 
     const target = document.getElementById(id)
     if (!target) return
@@ -239,18 +239,18 @@
   })
 
   $effect(() => {
-    if (browser) localStorage.setItem("toc-collapsed", String(collapsed))
+    if (browser) localStorage.setItem("toc-collapsed", String(isCollapsed))
   })
 
   // The open drawer is a modal dialog, so focus must move into it and Escape
   // must close it for keyboard and screen-reader users.
   $effect(() => {
-    if (!drawerOpen) return
+    if (!isDrawerOpen) return
 
     drawerEl?.focus()
 
     function onKeydown(event: KeyboardEvent): void {
-      if (event.key === "Escape") drawerOpen = false
+      if (event.key === "Escape") isDrawerOpen = false
     }
 
     window.addEventListener("keydown", onKeydown)
