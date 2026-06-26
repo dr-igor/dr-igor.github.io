@@ -33,6 +33,11 @@ export default tseslint.config(
     languageOptions: {
       parser: svelteParser,
       parserOptions: {
+        // `projectService` + `extraFileExtensions` lets typescript-eslint build a
+        // type-aware program for `.svelte` files, so the strict-typing rules
+        // (no-explicit-any, no-unsafe-*, no-floating-promises, prefer-readonly,
+        // consistent-type-assertions, naming-convention) run inside `<script>`.
+        // svelte-check type-checks templates; it does not enforce these lints.
         parser: tseslint.parser,
         projectService: true,
         extraFileExtensions: [".svelte"],
@@ -46,9 +51,6 @@ export default tseslint.config(
       // The site is served from a custom-domain root (base path is empty), so
       // plain internal hrefs never need base-prefixing via resolve().
       "svelte/no-navigation-without-resolve": "off",
-      // svelte-check owns type-aware checks for components; these rules need a
-      // TS program that isn't available once type-checking is disabled below.
-      "@typescript-eslint/naming-convention": "off",
       // Runes (`$props`/`$state`/`$derived`) require `let`; the rune-aware rule
       // replaces core prefer-const, which can't see the compiler's reassignment.
       "prefer-const": "off",
@@ -56,21 +58,21 @@ export default tseslint.config(
     },
   },
   {
-    // SvelteKit page-option exports (prerender/ssr/csr/trailingSlash) and load
-    // functions are framework-mandated names that the app cannot choose.
+    // SvelteKit page options (`prerender`/`ssr`/`csr`) are framework-mandated
+    // boolean export names the app cannot choose; exempt only those from the
+    // boolean-prefix rule so app-authored booleans here are still checked.
     files: ["src/**/+*.ts"],
     rules: {
-      "@typescript-eslint/naming-convention": "off",
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          selector: "variable",
+          types: ["boolean"],
+          format: ["PascalCase"],
+          prefix: ["is", "has", "should", "can", "did", "will"],
+          filter: { regex: "^(prerender|ssr|csr)$", match: false },
+        },
+      ],
     },
-  },
-  {
-    files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
-    ...tseslint.configs.disableTypeChecked,
-  },
-  {
-    // svelte-check is the authoritative type-checker for tests (it resolves
-    // `.svelte` component imports, which typescript-eslint's own program cannot).
-    files: ["**/*.test.ts", "**/*.spec.ts"],
-    ...tseslint.configs.disableTypeChecked,
   },
 )

@@ -1,0 +1,921 @@
+---
+title: "Audio Synthesis Recipes"
+description: "A field guide to building instruments from oscillators: the smallest set of ingredients that carries each instrument's recognizable identity, organized by instrument class."
+date: "2026-06-25"
+---
+
+<script>
+  import EnvelopeGlyph from "$lib/components/synthesis/EnvelopeGlyph.svelte"
+  import SpectrumGlyph from "$lib/components/synthesis/SpectrumGlyph.svelte"
+  import CentroidGlyph from "$lib/components/synthesis/CentroidGlyph.svelte"
+  import EnginePill from "$lib/components/synthesis/EnginePill.svelte"
+  import LabPill from "$lib/components/synthesis/LabPill.svelte"
+  import TagPill from "$lib/components/synthesis/TagPill.svelte"
+</script>
+
+Every entry is a **recipe**, not a reproduction: the smallest set of ingredients that carries an instrument's recognizable identity. The coloured pill on each recipe names its **engine**; the strip under it sketches the recipe symbolically — amplitude envelope, harmonic spectrum, and spectral centroid (brightness) over time relative to the note's pitch. Items marked <LabPill /> are playable in the companion **Instrument Anatomy** tool (Coming Soon).
+
+<h2 id="how-to-read-a-recipe">How to read a recipe</h2>
+
+Seven engines cover almost everything. The pill colour on each instrument tells you which one; picking it is most of the battle, and the rest is choosing partials, envelope shape, and one or two modulations.
+
+- **Subtractive** <EnginePill engine="SUB" /> — Start with a harmonically rich wave (saw/square/pulse) and carve it with filters. The workhorse for anything driven and harmonic: strings, brass, reeds.
+- **Additive** <EnginePill engine="ADD" /> — Sum sine partials directly, each with its own level and envelope. Exact spectral control — organs, bells, tuned bars, anything where you want named partials.
+- **Frequency Mod** <EnginePill engine="FM" /> — One oscillator modulates another's pitch. Cheap inharmonic and metallic spectra — electric pianos, bells, clangs, bite on an attack.
+- **Karplus–Strong** <EnginePill engine="KS" /> — A noise burst trapped in a tuned feedback delay = a real plucked/struck string, with the natural bright→dark decay built in.
+- **Source–Filter** <EnginePill engine="S-F" /> — A buzzy source through fixed resonant peaks (formants). The voice, and the "body" of any instrument whose resonances don't move with pitch.
+- **Noise + Envelope** <EnginePill engine="N+E" /> — Filtered noise shaped by an amplitude (and pitch) envelope. Cymbals, shakers, snares, breath, bow scrape.
+- **Inharmonic additive / Ring** <EnginePill engine="INH" /> — Sines or ring-modulated pairs placed at non-integer ratios. Bells, gongs, glass, anything that chimes rather than sings.
+
+### The three questions that pick an engine
+
+1. **Driven or decaying?** Continuously fed energy (bowed, blown, electric organ) gives a flat sustain. Struck or plucked gives no sustain — it rings out. This is the largest single split.
+2. **Harmonic or inharmonic?** Strings & air columns lock to integer partials. Stiff bars, plates and bells do not — their partials are stretched, which kills clear pitch and reads as "metallic" or "woody."
+3. **Pitched or noise?** Membranes and metals with dense inharmonic modes are effectively filtered noise with an envelope; only a few (timpani, steelpan) are tuned enough to play melodies.
+
+Reading the strip: the **envelope** trace is loudness over the note's life; the **spectrum** bars are which partials are present (gaps, inharmonic spacing, or a noise band all show here); the **centroid** curve is brightness over time against a dashed line marking the note's pitch — falling means bright→dark, rising means a brightness bloom. Plots are symbolic, sized to show relative differences, not measured.
+
+<h2 id="pluck">Struck &amp; Plucked Strings</h2>
+
+<TagPill>Chordophone · decays</TagPill>
+
+Energy is deposited once and the string rings out — **no sustain**, a **bright→dark decay** (high partials die first), and slight **inharmonicity** from string stiffness. The onset (hammer thunk vs. pick scrape vs. quill) and the decay length separate them.
+
+**Piano** <EnginePill engine="ADD" /> <LabPill />
+
+9+ stretched partials (B≈0.001), ~4 ms strike + broadband thunk, per-partial decay, double-decay tail; velocity→loudness & brightness together.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Percussive onset + ring-out + faintly stretched partials. That inharmonic stretch is the **"warmth"** that isn't in a pure-harmonic tone.
+
+**Electric piano (Rhodes/Wurli)** <EnginePill engine="FM" /> <LabPill />
+
+Carrier sine + modulator at ~14×, index decays in ~150 ms (the bark), body sine decays over 2–3 s; velocity→index.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="belltube" />
+  <CentroidGlyph shape="fallfast" />
+</div>
+
+A glassy inharmonic **bell-bark at onset** melting into a near-sine body. Wurlitzer = add a touch of reedy second-harmonic grit.
+
+**Harpsichord** <EnginePill engine="KS" /> <LabPill />
+
+Bright plucked string (KS or rich saw + fast attack), prominent pick/quill click, fast-ish decay, lid/case formants; **velocity does nothing** (the quill plucks the same every time).
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A sharp **quill click** over a thin, bright, dynamically-flat pluck — the absence of velocity response is half its character.
+
+**Clavinet** <EnginePill engine="KS" />
+
+Plucked/struck string through a magnetic pickup: narrow bright spectrum, very fast attack, short decay, strong upper-mid; often distorted/wah'd.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Funky, percussive, almost **nasal twang** — the pickup narrows the spectrum and the attack is everything.
+
+**Acoustic guitar (steel/nylon)** <EnginePill engine="KS" /> <LabPill />
+
+KS: 12 ms noise burst → tuned delay + lossy lowpass loop; pluck position notches certain harmonics (comb); body + soundhole formants (~100–200 Hz). Nylon = softer burst, darker loop.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Pick attack + **pluck-position comb filtering** + wooden body resonance, dulling as it rings.
+
+**Electric guitar (clean / dist.)** <EnginePill engine="SUB" />
+
+Plucked string, narrower pickup spectrum, long sustain (solid body loses little energy); distortion = waveshaping/clipping that adds harmonics and compresses dynamics; cabinet formants.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Clean: bell-like sustain. Distorted: harmonic saturation + near-infinite sustain — the **clipping**, not the string, is the timbre.
+
+**Bass guitar** <EnginePill engine="KS" />
+
+Low plucked string, strong fundamental + 2nd, short bright attack click, medium decay; finger vs. pick vs. slap changes the onset noise.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Fat fundamental with a **fingered thump or slap snap** on the attack.
+
+**Harp** <EnginePill engine="ADD" />
+
+Like piano but gentler onset (no hammer), very low inharmonicity (flexible strings), long clean decay, no sustain pedal damping by default.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A **soft pluck** with a long, pure, harmonic ring — cleaner and less percussive than a piano.
+
+**Mandolin / 12-string** <EnginePill engine="KS" />
+
+Paired strings detuned a few cents → chorus/beating; bright fast pluck; tremolo picking = rapid re-triggers.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Bright pluck with **shimmer from paired strings** beating against each other.
+
+**Banjo** <EnginePill engine="KS" />
+
+Plucked string coupled to a drum head: very bright, very fast decay, strong attack transient, slight membrane "plonk".
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Twangy, **percussive, fast-dying** — the drumhead resonance is the giveaway.
+
+**Sitar** <EnginePill engine="KS" />
+
+Main plucked string + a flat "jawari" bridge that buzzes (waveshaping/added high harmonics) + many sympathetic strings (extra detuned KS voices ringing).
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A **buzzing, sustaining shimmer** — the sympathetic strings keep ringing under the melody.
+
+**Pizzicato strings** <EnginePill engine="KS" /> <LabPill />
+
+Short bowed-string body but plucked: fast attack, quick decay, body formants, slight pluck noise.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="pluck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A **dry, woody pluck** that dies fast — the orchestral string body without the bow.
+
+<h2 id="bow">Bowed Strings</h2>
+
+<TagPill>Chordophone · driven</TagPill>
+
+The bow feeds energy continuously, so the tone **sustains and can swell**. Stick-slip friction gives a near-**sawtooth** spectrum, and mode-locking forces the partials onto exact integers (no inharmonicity). Vibrato and, for sections, **ensemble detuning** dominate the character.
+
+**Solo violin** <EnginePill engine="SUB" /> <LabPill />
+
+Sawtooth → gentle lowpass + body formants (~300–3 kHz); ~80–120 ms bow attack; vibrato ~5–6 Hz, delayed; bow pressure→brightness.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Singing sustained saw with **expressive vibrato**; bow position (sul tasto→dark, sul ponticello→glassy) = move the filter.
+
+**Viola / cello / double bass** <EnginePill engine="SUB" /> <LabPill />
+
+Same engine, lower range, larger body formants moved down, slightly slower attack, woodier lowpass.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+The bowed-saw identity shifted down with a **rounder, chestier body** resonance.
+
+**String section / ensemble** <EnginePill engine="SUB" /> <LabPill />
+
+4–9 detuned saws (±3–12 cents) + timing/phase spread; slow swell; collective vibrato.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="swell" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+The **shimmer of many players** beating — detune + numbers, not a single richer voice.
+
+**Tremolo / col legno / harmonics** <EnginePill engine="SUB" />
+
+Tremolo = fast amplitude/retrigger flutter; col legno = mostly bow-wood noise (N+E); natural harmonics = near-sine at a node.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Articulation tricks: **flutter, wood-clatter, or a glassy whistle** over the same bowed core.
+
+**Hurdy-gurdy** <EnginePill engine="SUB" />
+
+Bowed (wheel) drone saws + a buzzing bridge (rhythmic waveshaping) + sympathetic drones.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="flat" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+A droning bowed sound with a **percussive buzz** ticking underneath.
+
+<h2 id="brass">Brass</h2>
+
+<TagPill>Aerophone · lip-reed · driven</TagPill>
+
+Lips buzz into a tube; the tone **brightens as you blow harder**. The signature is a **filter that opens just behind the volume**, with bloom speed and height tracking effort. Mutes add strong fixed formants.
+
+**Trumpet** <EnginePill engine="SUB" /> <LabPill />
+
+Sawtooth; fast amp attack; filter env attack slightly LONGER than amp → brightness bloom; velocity→cutoff; delayed vibrato; optional FM/noise rasp burst at onset.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="rise" />
+</div>
+
+The **brightness bloom coupled to loudness** is the whole identity — play soft = dull, hard = blazing.
+
+**Trombone** <EnginePill engine="SUB" />
+
+As trumpet, lower, with portamento (slide) between notes; broader bore = slightly rounder.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="rise" />
+</div>
+
+Brass bloom plus **glissando slides** connecting pitches.
+
+**French horn** <EnginePill engine="SUB" /> <LabPill />
+
+Saw with a darker lowpass (mellower), slower bloom, hand-in-bell = a gentle high-cut formant; wide warm vibrato.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="rise" />
+</div>
+
+**Rounder, more distant** brass — the bloom is softer and the top is rolled off.
+
+**Tuba / euphonium** <EnginePill engine="SUB" />
+
+Low saw, fat fundamental, slow gentle bloom, broad body.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="rise" />
+</div>
+
+Brass identity at the bottom: **round, slow, weighty**.
+
+**Muted (straight / Harmon / cup)** <EnginePill engine="S-F" /> <LabPill />
+
+Brass core + a strong fixed bandpass formant; Harmon = a sharp peak you can sweep (wah); nasal, thin, buzzy.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="formant" />
+  <CentroidGlyph shape="rise" />
+</div>
+
+A pinched, **vocal "wah"** — the mute imposes a fixed resonance the open horn doesn't have.
+
+<h2 id="wind">Woodwinds</h2>
+
+<TagPill>Aerophone · driven</TagPill>
+
+Air columns, but the **bore shape sets the harmonics**: a closed cylinder (clarinet) keeps only **odd** harmonics; a cone (sax, oboe, flute-ish) keeps the **full** series. Nearly all carry audible **breath noise**, strongest at onset.
+
+**Flute** <EnginePill engine="SUB" /> <LabPill />
+
+Triangle/sine (few harmonics) + filtered breath noise loudest at attack; soft attack; vibrato ~5 Hz.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="trihi" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Almost a pure tone — the **breath noise** is what makes it a flute and not a sine.
+
+**Piccolo / recorder / pan flute** <EnginePill engine="SUB" />
+
+Flute engine: piccolo = octave up, more breath; recorder = purer, less breath; pan flute = strong breathy chiff at onset.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="trihi" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Variations on near-sine + air; the **amount and color of breath** separates them.
+
+**Ocarina** <EnginePill engine="ADD" />
+
+Vessel (Helmholtz) resonator → essentially a single sine + tiny 2nd harmonic, gentle attack, light breath.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="sine" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+The **purest** wind voice — close to a flutey sine with almost no overtones.
+
+**Shakuhachi** <EnginePill engine="SUB" />
+
+Flute core with heavy breath, pitch bends (meri/kari), and noisy attacks.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="trihi" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+A **breathy, vocal, bending** flute — the noise and pitch inflection carry it.
+
+**Clarinet** <EnginePill engine="SUB" /> <LabPill />
+
+Square wave (= odd harmonics), gentle lowpass, medium reedy attack, slight breath, subtle vibrato.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="square" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Hollow and woody because **even harmonics are missing** — the square wave is the shortcut.
+
+**Saxophone** <EnginePill engine="S-F" /> <LabPill />
+
+Sawtooth (conical → full series) + strong vocal formants + plenty of breath; medium attack; growl = add noise/FM.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="formant" />
+  <CentroidGlyph shape="rise" />
+</div>
+
+Reedy and **vocal** — the formants and breath make it sing; full harmonic series, unlike the clarinet.
+
+**Oboe / English horn** <EnginePill engine="S-F" /> <LabPill />
+
+Narrow pulse or saw + a strong nasal formant pair (~1–3 kHz), thin and bright, quick reedy attack, vibrato.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="formant" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Pinched and **nasal** — a tight formant on a reedy double-reed buzz.
+
+**Bassoon** <EnginePill engine="S-F" />
+
+Low narrow-pulse/saw + low formants, woody, soft attack.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="formant" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+The **dark, woody, slightly comic** double-reed — oboe character moved low.
+
+**Harmonica / accordion / harmonium** <EnginePill engine="SUB" /> <LabPill />
+
+Free reeds: saw/square stack, near-instant on, flat sustain, fast off; accordion = two reeds detuned (musette tremolo); vibrato via bellows.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="flat" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Organ-like **flat sustain** with a reedy buzz and, for accordion, that detuned **musette beating**.
+
+<h2 id="organ">Organs &amp; Pipes</h2>
+
+<TagPill>Aerophone/electromech · driven</TagPill>
+
+Continuously driven and **dead-flat**: instant on, steady hold, fast off, with little or no envelope evolution. Tone comes from **which partials (stops/drawbars)** are mixed, not from dynamics.
+
+**Hammond / tonewheel** <EnginePill engine="ADD" /> <LabPill />
+
+Sum of near-sine partials at drawbar ratios (16′,8′,5⅓′,4′…); rectangular envelope; key-click transient; scanner vibrato / Leslie chorus.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="flat" />
+  <SpectrumGlyph shape="organ" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Literal additive synthesis — drawbars are **harmonic faders**; the **absence of dynamics** is the identity.
+
+**Pipe organ (flue stops)** <EnginePill engine="ADD" /> <LabPill />
+
+Stacked stops at octave/fifth ratios; flue = flutey near-sine + a little chiff at onset; principals = brighter saw-ish.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="flat" />
+  <SpectrumGlyph shape="organ" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Massive, static, additive — voiced by **stop selection**, with a breathy chiff as pipes speak.
+
+**Pipe organ (reed stops)** <EnginePill engine="SUB" />
+
+Buzzy saw/pulse + formant (the resonator), flat sustain.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="flat" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+The **snarling, buzzy** organ color — a reed, not a flue.
+
+**Combo organ (Vox / Farfisa)** <EnginePill engine="ADD" />
+
+Drawbars of complex (not pure) tones → brighter, buzzier, thinner; fast vibrato.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="flat" />
+  <SpectrumGlyph shape="organ" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Cheap, bright, **reedy 60s organ** — complex-tone partials instead of clean sines.
+
+<h2 id="voice">Voice</h2>
+
+<TagPill>Source–filter · driven</TagPill>
+
+The textbook **source–filter** instrument: vocal folds make a buzzy **glottal pulse** (rich in harmonics), and the vocal tract imposes **formants** (F1, F2, F3) that select the vowel. Move the formants, not the pitch, to change vowel.
+
+**Sung vowel** <EnginePill engine="S-F" /> <LabPill />
+
+Sawtooth/pulse glottal source → 3 high-Q bandpass formants. "ah" ≈ F1 700 / F2 1200; "ee" ≈ 300 / 2300; "oo" ≈ 300 / 870. Vibrato ~5–6 Hz.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="formant" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Pitch and vowel are **independent**: harmonics set pitch, formants set the vowel.
+
+**Choir / vocal pad** <EnginePill engine="S-F" /> <LabPill />
+
+Several detuned vowel-voices (ensemble) + slow attack + collective vibrato + reverb.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="swell" />
+  <SpectrumGlyph shape="formant" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Vowel formants plus **ensemble shimmer** — a section of singers, not one.
+
+**Whisper / breath** <EnginePill engine="N+E" />
+
+Filtered noise (no glottal source) shaped by the same formants.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="noiseband" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+Formants without pitch → **unpitched, breathy** vowels.
+
+**Overtone / throat singing** <EnginePill engine="S-F" />
+
+Drone source + one extremely narrow sweepable formant that isolates single upper harmonics.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="flat" />
+  <SpectrumGlyph shape="formant" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+A **whistling harmonic** floating over a drone — one formant picking out partials.
+
+<h2 id="bars">Tuned Percussion — Bars &amp; Plates</h2>
+
+<TagPill>Idiophone · struck · decays</TagPill>
+
+Struck stiff bars. A free bar's natural overtones are **inharmonic**, so makers **undercut** the bar to pull one overtone into tune and add tuned **resonators**. Wood = short decay; metal = long. The **overtone ratio** is the family fingerprint.
+
+**Marimba** <EnginePill engine="ADD" /> <LabPill />
+
+Fundamental + overtone at ≈4× (two octaves, "octave tuning") + weak ~9.2×; soft mallet; tube resonator on the fundamental; fast wood decay.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="bars14" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Dark, round, mellow — the **1:4 overtone** sits with the orchestra, so it blends and dies quickly.
+
+**Xylophone** <EnginePill engine="ADD" /> <LabPill />
+
+Fundamental + overtone at ≈3× (a twelfth, "quint tuning") + a spike near 5×/7×; harder mallet; short decay.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="bars13" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Bright and cutting — the **1:3 overtone** (clarinet-like) makes it ring out over everything.
+
+**Vibraphone** <EnginePill engine="ADD" /> <LabPill />
+
+Aluminium bars, overtone at ≈4×, long decay; motor-driven disc valves → amplitude **tremolo**; pedal sustain.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="bars14" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Shimmering metallic sustain with that **rotating-disc tremolo** — the one tuned-bar instrument that breathes.
+
+**Glockenspiel** <EnginePill engine="INH" /> <LabPill />
+
+Small steel bars: bright, high, partials **not** well-tuned (audibly inharmonic), short metallic ping.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="inharmhi" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Tiny bright **bell-like ping** — high enough that the inharmonicity reads as sparkle.
+
+**Celesta** <EnginePill engine="ADD" />
+
+Hammered steel plates over resonators: glockenspiel-ish but **soft, sweet**, gentle attack, longer decay.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="inharmhi" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A **music-box-like** bell tone with a soft, rounded onset.
+
+**Kalimba / mbira** <EnginePill engine="ADD" /> <LabPill />
+
+Plucked metal tine: strong fundamental + a couple of slightly inharmonic partials + a "buzz" overtone; medium decay, body resonance.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="bars14" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Round metallic pluck with a faint **inharmonic buzz** — thumb-piano warmth.
+
+**Music box** <EnginePill engine="ADD" /> <LabPill />
+
+Struck steel comb tine: bright near-bell partials, fast attack, medium decay, thin and delicate.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="inharmhi" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A small, bright, slightly **inharmonic chime** — sparse and toy-like.
+
+**Steelpan** <EnginePill engine="ADD" />
+
+Hammered pan note tuned so the first few **harmonics are real** (1,2,3 strong) + metallic shimmer; medium decay.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="saw" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Unusual for metal: a **genuinely harmonic**, singing, shimmering struck tone.
+
+**Glass harmonica** <EnginePill engine="ADD" />
+
+Rubbed glass: near-**sine** fundamental + faint partials, slow swell (driven, not struck), pure.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="swell" />
+  <SpectrumGlyph shape="sine" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+An ethereal, almost **pure-sine** sustained tone with a glassy edge.
+
+<h2 id="bells">Bells &amp; Gongs</h2>
+
+<TagPill>Idiophone · struck · inharmonic</TagPill>
+
+Strongly **inharmonic** metal. A church bell is deliberately tuned to five partials — **hum, prime, tierce, quint, nominal** — but the **tierce is a minor third** above the strike note, which is why bells sound plaintive. Gongs/cymbals abandon tuning entirely: dense inharmonic clouds = pitched noise.
+
+**Church / tower bell** <EnginePill engine="INH" /> <LabPill />
+
+Additive: hum (×0.5), prime/strike (×1), tierce (×1.2 = minor 3rd), quint (×1.5), nominal (×2) + higher inharmonics; sharp strike, very long uneven decay (hum lingers).
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="bellchurch" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+The **minor-third tierce** over the strike note is the melancholy "bell" color; the hum rings on after.
+
+**Tubular bells / chimes** <EnginePill engine="INH" /> <LabPill />
+
+Upper modes tuned near 2:3:4 so a **strike note** emerges (no real fundamental there); bright metallic attack, long ring.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="belltube" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A clear chimed pitch that **isn't physically the lowest partial** — your ear infers it from the upper modes.
+
+**Handbell / crotales** <EnginePill engine="INH" />
+
+Bell partial set, shorter (handbell) or very high & sustained (crotales).
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="bellchurch" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+Same inharmonic bell DNA, scaled in size and ring time.
+
+**Cowbell** <EnginePill engine="INH" />
+
+Two or three clashing inharmonic partials, fast decay, no clear pitch.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="inharmhi" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A **clanky, pitch-ambiguous** hit — a few dissonant metal modes.
+
+**Triangle** <EnginePill engine="N+E" />
+
+Very dense high inharmonic partials ≈ bright metallic noise + faint pitch, long shimmer.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="sustain" />
+  <SpectrumGlyph shape="noisehi" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+A bright **sustained metallic ting** with no definite pitch.
+
+**Gong / tam-tam** <EnginePill engine="INH" /> <LabPill />
+
+Dozens of inharmonic partials + noise + a low mallet thump; soft mallet → the sound **builds and shimmers** after the strike (energy spreads between modes); huge decay.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="swell" />
+  <SpectrumGlyph shape="inharmlow" />
+  <CentroidGlyph shape="rise" />
+</div>
+
+A **swelling, shimmering metallic cloud** — the bloom after the hit is the signature.
+
+**Cymbal (crash/ride)** <EnginePill engine="N+E" /> <LabPill />
+
+Bandpassed white noise + a few ring-modulated square pairs for metallic edge; fast attack, long wash (crash) or pingy stick attack + sustain (ride).
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="noisehi" />
+  <CentroidGlyph shape="noise" />
+</div>
+
+Broadband **metallic noise**; ring-mod gives the inharmonic "clang" a filter alone can't.
+
+**Hi-hat (closed/open)** <EnginePill engine="N+E" /> <LabPill />
+
+Highpassed noise + ring-mod metal; closed = ~40 ms gate, open = long; tight transient.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="noisehi" />
+  <CentroidGlyph shape="noise" />
+</div>
+
+A short, bright, **metallic chick** — cymbal recipe with a fast gate.
+
+<h2 id="drums">Drums</h2>
+
+<TagPill>Membranophone · struck</TagPill>
+
+A struck membrane's modes are inharmonic and mostly **unpitched**; pitch comes from a fast downward **pitch envelope** plus body resonance. Only timpani (kettle + air loading) tunes its modes near-harmonic enough to play melodies.
+
+**Timpani** <EnginePill engine="ADD" /> <LabPill />
+
+Kettle loads the membrane so prominent modes approach **~1:1.5:2:2.4** (definite pitch); sine-ish partials + short pitch drop + mallet noise; long resonant decay.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="struck" />
+  <SpectrumGlyph shape="bars14" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+The **one tunable drum** — near-harmonic loaded modes give it a real, if dark, pitch.
+
+**Kick / bass drum** <EnginePill engine="N+E" /> <LabPill />
+
+Sine/triangle with a fast downward **pitch envelope** (e.g., 120→40 Hz in ~50 ms) + a click transient; short body decay.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="sine" />
+  <CentroidGlyph shape="fallfast" />
+</div>
+
+The **pitch-drop "thump"** — a falling sine is 90% of a kick.
+
+**Tom-tom** <EnginePill engine="N+E" /> <LabPill />
+
+Like kick but higher and more resonant: pitched sine + downward bend + a little head noise + body ring.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="sine" />
+  <CentroidGlyph shape="fallfast" />
+</div>
+
+A **tuned "doom"** with an audible downward bend.
+
+**Snare** <EnginePill engine="N+E" /> <LabPill />
+
+A tonal shell (two detuned sines, fast pitch drop) + a burst of **bright noise** (the snares) gated to ~150 ms.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="noiseband" />
+  <CentroidGlyph shape="noise" />
+</div>
+
+**Tone + noise rattle** together; the noise band is the snare wires.
+
+**Congas / bongos / tabla** <EnginePill engine="N+E" />
+
+Sharp tonal slap (pitched, fast decay) + open/muted variants; tabla adds a pronounced **pitch bend** and clear tuning.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="sine" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+**Hand-drum tone** — pitched membrane with slap articulation; tabla is the most melodic.
+
+**Frame drum / taiko** <EnginePill engine="N+E" />
+
+Low broadband boom: noise + low sine, fast decay, big body.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="noiseband" />
+  <CentroidGlyph shape="fall" />
+</div>
+
+A **deep, dry boom** — minimal pitch, maximal body.
+
+<h2 id="noise">Unpitched Percussion</h2>
+
+<TagPill>Noise + envelope</TagPill>
+
+No pitch to speak of — these are **noise (or a click) through a filter and a tight envelope**. Identity lives in the noise color and the envelope shape (sharp tick vs. swish vs. rattle).
+
+**Woodblock / claves** <EnginePill engine="N+E" /> <LabPill />
+
+A short resonant click: bandpassed noise or a quick sine ping, ~30–60 ms, high-mid.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="sine" />
+  <CentroidGlyph shape="flat" />
+</div>
+
+A dry **tonal "tock"** — one short resonant pop.
+
+**Shaker / maracas / cabasa** <EnginePill engine="N+E" />
+
+Highpassed noise burst, ~30–80 ms, soft attack; rhythmic re-triggering makes the groove.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="noisehi" />
+  <CentroidGlyph shape="noise" />
+</div>
+
+A **filtered noise "chh"** — color and envelope are everything.
+
+**Tambourine** <EnginePill engine="N+E" />
+
+Bright metallic noise (many tiny jingles) + a head-hit transient; longer shimmer on shakes.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="noisehi" />
+  <CentroidGlyph shape="noise" />
+</div>
+
+A **jingly metallic swish** over a soft hit.
+
+**Clap / snap** <EnginePill engine="N+E" />
+
+Several closely-spaced noise bursts (the "many hands" flam) into a short reverb tail.
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="noiseband" />
+  <CentroidGlyph shape="noise" />
+</div>
+
+Noise with a **stuttered multi-tap attack** — that's what says "clap" not "snare".
+
+**Guiro / ratchet / cabasa scrape** <EnginePill engine="N+E" />
+
+Rhythmically amplitude-modulated noise (a train of grains).
+
+<div class="not-prose my-2 flex gap-2">
+  <EnvelopeGlyph shape="hit" />
+  <SpectrumGlyph shape="noiseband" />
+  <CentroidGlyph shape="noise" />
+</div>
+
+A **rasping, ratcheting** texture — pulsed noise.
+
+<h2 id="references">References</h2>
+
+- Grey (1977) & McAdams — timbre space, attack transients, spectral centroid — [mcgill.ca/mpcl](https://www.mcgill.ca/mpcl/files/mpcl/mcadams_2019_foundmuspsychol.pdf)
+- Gordon Reid, _Synth Secrets_ (Sound on Sound) — subtractive synthesis of real instruments — [soundonsound.com](https://www.soundonsound.com/series/synth-secrets-sound-sound)
+- Synth Secrets — synthesizing brass (filter bloom) — [soundonsound.com](https://www.soundonsound.com/techniques/synthesizing-brass-instruments)
+- Bill Hibbert, _The Sound of Bells_ — bell partials, hum/prime/tierce tuning — [hibberts.co.uk](https://www.hibberts.co.uk/basic-principles-of-bell-tuning/)
+- Strike tone & the perceived pitch of bells — [hibberts.co.uk/strike.htm](https://www.hibberts.co.uk/strike.htm)
+- Stanford CCRMA — percussion: bar & plate overtone tuning — [ccrma.stanford.edu](https://ccrma.stanford.edu/CCRMA/Courses/150/percussion.html)
+- Euphonics — marimbas & xylophones (measured bar ratios) — [euphonics.org](https://euphonics.org/3-3-marimbas-and-xylophones/)
+- Yamaha — marimba vs. xylophone tuning (octave vs. quint) — [hub.yamaha.com](https://hub.yamaha.com/drums/percussion/whats-the-difference-between-marimba-and-xylophone/)
+- UNSW Music Acoustics — saxophone (conical bore, breath floor) — [newt.phys.unsw.edu.au](https://newt.phys.unsw.edu.au/music/saxophone/)
+- Wikipedia — Inharmonicity (stretched piano partials, "warmth") — [en.wikipedia.org](https://en.wikipedia.org/wiki/Inharmonicity)
+- Wikipedia — Hammond organ (additive drawbars) — [en.wikipedia.org](https://en.wikipedia.org/wiki/Hammond_organ)
+- Wikipedia — Formant (vowel F1/F2 source–filter) — [en.wikipedia.org](https://en.wikipedia.org/wiki/Formant)
+
+Recipes are starting points — real instruments are messier, and the fun is in the deviations.
+
+---
+
+**Disclaimer:** This field guide was researched and compiled with AI assistance. The synthesis recipes are simplified starting points, not measured reproductions.

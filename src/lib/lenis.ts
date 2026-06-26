@@ -1,9 +1,10 @@
 import Lenis from "lenis"
+import { lenis } from "$lib/stores/lenis.svelte"
 
 export function createSmoothScroll(
   onScroll: (scrollY: number, progress: number) => void,
 ): () => void {
-  const lenis = new Lenis({
+  const instance = new Lenis({
     duration: 0.7,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
@@ -11,17 +12,20 @@ export function createSmoothScroll(
     touchMultiplier: 0.5,
   })
 
-  lenis.on("scroll", (instance: Lenis) => {
-    onScroll(instance.scroll, instance.progress)
+  lenis.set(instance)
+
+  instance.on("scroll", (current: Lenis) => {
+    onScroll(current.scroll, current.progress)
   })
 
   let frameId = requestAnimationFrame(function raf(time) {
-    lenis.raf(time)
+    instance.raf(time)
     frameId = requestAnimationFrame(raf)
   })
 
   return () => {
     cancelAnimationFrame(frameId)
-    lenis.destroy()
+    instance.destroy()
+    lenis.set(undefined)
   }
 }
