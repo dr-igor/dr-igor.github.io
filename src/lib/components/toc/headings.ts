@@ -27,14 +27,16 @@ export function observeActiveHeading(
   const visible = new Set<string>()
 
   // Top margin clears the fixed navbar; the -70% bottom narrows the "active"
-  // band to the upper third of the viewport so one section wins at a time.
+  // band to the upper third of the viewport. When short sections share the
+  // band, the lowest one — closest to what the reader has scrolled to — wins,
+  // so the highlight tracks the reader rather than lagging a heading behind.
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) visible.add(entry.target.id)
         else visible.delete(entry.target.id)
       }
-      const active = headings.find((heading) => visible.has(heading.id))
+      const active = headings.findLast((heading) => visible.has(heading.id))
       if (active) onActive(active.id)
     },
     { rootMargin: "-80px 0px -70% 0px" },
