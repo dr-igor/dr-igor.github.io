@@ -39,6 +39,9 @@ test:
 format:
     npm run format
 
+# Run all checks
+check-all: format lint check test
+
 # Clean build artifacts
 clean:
     rm -rf build .svelte-kit node_modules

@@ -15,28 +15,24 @@
           onclick={() => (isCollapsed = false)}
           aria-expanded="false"
           aria-label="Expand table of contents"
-          class="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white/60 text-gray-500 transition-colors hover:border-purple-500 hover:text-purple-600 dark:border-zinc-800 dark:bg-zinc-900/60 dark:text-gray-400 dark:hover:border-purple-400 dark:hover:text-purple-400"
+          class={RAIL_EXPAND_BUTTON}
         >
           <ChevronRight class="h-4 w-4" aria-hidden="true" />
         </button>
       {:else}
         <nav
           aria-label="Table of contents"
-          class="rounded-xl border border-gray-200 bg-white/60 p-3 dark:border-zinc-800 dark:bg-zinc-900/60"
+          class={RAIL_NAV}
           transition:fade={{ duration: 150 }}
         >
           <div class="mb-2 flex items-center justify-between">
-            <span
-              class="font-mono text-[10px] tracking-wider text-gray-400 uppercase dark:text-gray-500"
-            >
-              Contents
-            </span>
+            <span class={CAPTION}> Contents </span>
             <button
               type="button"
               onclick={() => (isCollapsed = true)}
               aria-expanded="true"
               aria-label="Collapse table of contents"
-              class="flex h-6 w-6 items-center justify-center rounded text-gray-400 transition-colors hover:text-purple-600 dark:text-gray-500 dark:hover:text-purple-400"
+              class={ICON_BUTTON}
             >
               <ChevronLeft class="h-4 w-4" aria-hidden="true" />
             </button>
@@ -55,7 +51,7 @@
     onclick={() => (isDrawerOpen = true)}
     aria-controls="toc-drawer"
     aria-expanded={isDrawerOpen}
-    class="sticky top-16 z-30 mb-6 flex items-center gap-2 rounded-lg border border-gray-200 bg-white/80 px-3 py-2 text-sm font-medium text-gray-600 backdrop-blur-sm transition-colors hover:text-purple-600 lg:hidden dark:border-zinc-800 dark:bg-zinc-950/80 dark:text-gray-300 dark:hover:text-purple-400"
+    class={MOBILE_TRIGGER}
   >
     <List class="h-4 w-4" aria-hidden="true" />
     Contents
@@ -82,19 +78,15 @@
       tabindex="-1"
       aria-label="Table of contents"
       transition:fly={{ x: -320, duration: 250 }}
-      class="absolute top-0 left-0 flex h-full w-72 max-w-[80%] flex-col gap-2 overflow-y-auto border-r border-gray-200 bg-white p-4 focus:outline-none dark:border-zinc-800 dark:bg-zinc-950"
+      class={DRAWER_NAV}
     >
       <div class="flex items-center justify-between">
-        <span
-          class="font-mono text-[10px] tracking-wider text-gray-400 uppercase dark:text-gray-500"
-        >
-          Contents
-        </span>
+        <span class={CAPTION}> Contents </span>
         <button
           type="button"
           onclick={() => (isDrawerOpen = false)}
           aria-label="Close table of contents"
-          class="flex h-6 w-6 items-center justify-center rounded text-gray-400 transition-colors hover:text-purple-600 dark:text-gray-500 dark:hover:text-purple-400"
+          class={ICON_BUTTON}
         >
           <X class="h-4 w-4" aria-hidden="true" />
         </button>
@@ -107,14 +99,8 @@
 
 {#snippet depthControl()}
   {#if maxDepth > 1}
-    <div
-      class="mb-2 flex items-center justify-between gap-2 border-b border-gray-100 pb-2 dark:border-zinc-800/60"
-    >
-      <span
-        class="font-mono text-[10px] tracking-wider text-gray-400 uppercase dark:text-gray-500"
-      >
-        Levels
-      </span>
+    <div class={DEPTH_HEADER}>
+      <span class={CAPTION}> Levels </span>
       <div
         class="flex items-center gap-1.5"
         role="group"
@@ -125,7 +111,7 @@
           onclick={() => setDepth(effectiveDepth - 1)}
           disabled={effectiveDepth <= 1}
           aria-label="Show fewer heading levels"
-          class="flex h-5 w-5 items-center justify-center rounded border border-gray-200 text-gray-500 transition-colors hover:border-purple-500 hover:text-purple-600 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500 dark:border-zinc-700 dark:text-gray-400 dark:hover:border-purple-400 dark:hover:text-purple-400 dark:disabled:hover:border-zinc-700 dark:disabled:hover:text-gray-400"
+          class={DEPTH_BUTTON}
         >
           <Minus class="h-3 w-3" aria-hidden="true" />
         </button>
@@ -140,7 +126,7 @@
           onclick={() => setDepth(effectiveDepth + 1)}
           disabled={effectiveDepth >= maxDepth}
           aria-label="Show more heading levels"
-          class="flex h-5 w-5 items-center justify-center rounded border border-gray-200 text-gray-500 transition-colors hover:border-purple-500 hover:text-purple-600 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500 dark:border-zinc-700 dark:text-gray-400 dark:hover:border-purple-400 dark:hover:text-purple-400 dark:disabled:hover:border-zinc-700 dark:disabled:hover:text-gray-400"
+          class={DEPTH_BUTTON}
         >
           <Plus class="h-3 w-3" aria-hidden="true" />
         </button>
@@ -158,8 +144,7 @@
           onclick={(event) => goTo(event, heading.id)}
           aria-current={activeId === heading.id ? "true" : undefined}
           style="padding-left: {0.75 + (heading.level - baseLevel) * 0.75}rem"
-          class="block border-l-2 py-1 pr-2 leading-snug transition-colors {activeId ===
-          heading.id
+          class="{TOC_LINK_BASE} {activeId === heading.id
             ? 'border-purple-500 font-medium text-purple-600 dark:border-purple-400 dark:text-purple-400'
             : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-purple-600 dark:text-gray-400 dark:hover:border-zinc-600 dark:hover:text-purple-400'}"
         >
@@ -177,6 +162,153 @@
   import { fade, fly } from "svelte/transition"
   import { extractHeadings, observeActiveHeading } from "./headings"
   import { lenis } from "$lib/stores/lenis.svelte"
+
+  const CAPTION = [
+    "font-mono",
+    "text-[10px]",
+    "tracking-wider",
+    "text-gray-400",
+    "uppercase",
+    "dark:text-gray-500",
+  ].join(" ")
+
+  const ICON_BUTTON = [
+    "flex",
+    "h-6",
+    "w-6",
+    "items-center",
+    "justify-center",
+    "rounded",
+    "text-gray-400",
+    "transition-colors",
+    "hover:text-purple-600",
+    "dark:text-gray-500",
+    "dark:hover:text-purple-400",
+  ].join(" ")
+
+  const DEPTH_BUTTON = [
+    "flex",
+    "h-5",
+    "w-5",
+    "items-center",
+    "justify-center",
+    "rounded",
+    "border",
+    "border-gray-200",
+    "text-gray-500",
+    "transition-colors",
+    "hover:border-purple-500",
+    "hover:text-purple-600",
+    "disabled:cursor-not-allowed",
+    "disabled:opacity-40",
+    "disabled:hover:border-gray-200",
+    "disabled:hover:text-gray-500",
+    "dark:border-zinc-700",
+    "dark:text-gray-400",
+    "dark:hover:border-purple-400",
+    "dark:hover:text-purple-400",
+    "dark:disabled:hover:border-zinc-700",
+    "dark:disabled:hover:text-gray-400",
+  ].join(" ")
+
+  const RAIL_EXPAND_BUTTON = [
+    "flex",
+    "h-9",
+    "w-9",
+    "items-center",
+    "justify-center",
+    "rounded-lg",
+    "border",
+    "border-gray-200",
+    "bg-white/60",
+    "text-gray-500",
+    "transition-colors",
+    "hover:border-purple-500",
+    "hover:text-purple-600",
+    "dark:border-zinc-800",
+    "dark:bg-zinc-900/60",
+    "dark:text-gray-400",
+    "dark:hover:border-purple-400",
+    "dark:hover:text-purple-400",
+  ].join(" ")
+
+  const RAIL_NAV = [
+    "rounded-xl",
+    "border",
+    "border-gray-200",
+    "bg-white/60",
+    "p-3",
+    "dark:border-zinc-800",
+    "dark:bg-zinc-900/60",
+  ].join(" ")
+
+  const MOBILE_TRIGGER = [
+    "sticky",
+    "top-16",
+    "z-30",
+    "mb-6",
+    "flex",
+    "items-center",
+    "gap-2",
+    "rounded-lg",
+    "border",
+    "border-gray-200",
+    "bg-white/80",
+    "px-3",
+    "py-2",
+    "text-sm",
+    "font-medium",
+    "text-gray-600",
+    "backdrop-blur-sm",
+    "transition-colors",
+    "hover:text-purple-600",
+    "lg:hidden",
+    "dark:border-zinc-800",
+    "dark:bg-zinc-950/80",
+    "dark:text-gray-300",
+    "dark:hover:text-purple-400",
+  ].join(" ")
+
+  const DRAWER_NAV = [
+    "absolute",
+    "top-0",
+    "left-0",
+    "flex",
+    "h-full",
+    "w-72",
+    "max-w-[80%]",
+    "flex-col",
+    "gap-2",
+    "overflow-y-auto",
+    "border-r",
+    "border-gray-200",
+    "bg-white",
+    "p-4",
+    "focus:outline-none",
+    "dark:border-zinc-800",
+    "dark:bg-zinc-950",
+  ].join(" ")
+
+  const DEPTH_HEADER = [
+    "mb-2",
+    "flex",
+    "items-center",
+    "justify-between",
+    "gap-2",
+    "border-b",
+    "border-gray-100",
+    "pb-2",
+    "dark:border-zinc-800/60",
+  ].join(" ")
+
+  const TOC_LINK_BASE = [
+    "block",
+    "border-l-2",
+    "py-1",
+    "pr-2",
+    "leading-snug",
+    "transition-colors",
+  ].join(" ")
 
   interface Props {
     /** The rendered article container to scan for headings. */

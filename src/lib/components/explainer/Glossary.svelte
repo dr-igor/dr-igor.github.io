@@ -9,7 +9,7 @@
           type="button"
           onclick={() => toggle(item.term)}
           aria-expanded={expanded.has(item.term)}
-          class="flex w-full items-center justify-between p-4 transition-colors hover:bg-gray-700"
+          class={TERM_BUTTON}
         >
           <span class="text-left font-semibold text-blue-300">{item.term}</span>
           {#if expanded.has(item.term)}
@@ -29,6 +29,16 @@
 <script lang="ts">
   import { ChevronDown, ChevronRight } from "@lucide/svelte"
   import { SvelteSet } from "svelte/reactivity"
+
+  const TERM_BUTTON = [
+    "flex",
+    "w-full",
+    "items-center",
+    "justify-between",
+    "p-4",
+    "transition-colors",
+    "hover:bg-gray-700",
+  ].join(" ")
 
   interface Term {
     term: string

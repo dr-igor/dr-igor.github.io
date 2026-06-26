@@ -9,11 +9,9 @@
 
   <div class="mb-6 space-y-3">
     {#each CUES as cue (cue.rank)}
-      <div class="rounded bg-gray-800 p-4">
+      <Card variant="panel">
         <div class="mb-2 flex items-center gap-3">
-          <div
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 font-bold text-white"
-          >
+          <div class={RANK_BADGE}>
             {cue.rank}
           </div>
           <div class="flex-1">
@@ -27,16 +25,16 @@
           </div>
         </div>
         <p class="ml-11 text-sm text-gray-400">{cue.description}</p>
-      </div>
+      </Card>
     {/each}
   </div>
 
-  <div class="mb-6 rounded bg-gray-800 p-4">
+  <Card variant="panel" class="mb-6">
     <h4 class="mb-3 font-semibold text-blue-300">
       Fundamental Localization Cues (for position, not grouping)
     </h4>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-      <div class="rounded bg-gray-700 p-3">
+      <Card variant="nested">
         <div class="mb-2 font-semibold text-green-400">ITD (Timing)</div>
         <ul class="space-y-1 text-sm text-gray-300">
           <li>• Dominant below 1500 Hz</li>
@@ -44,8 +42,8 @@
           <li>• Max delay: ~650 microseconds</li>
           <li>• Used for horizontal positioning</li>
         </ul>
-      </div>
-      <div class="rounded bg-gray-700 p-3">
+      </Card>
+      <Card variant="nested">
         <div class="mb-2 font-semibold text-green-400">ILD (Volume)</div>
         <ul class="space-y-1 text-sm text-gray-300">
           <li>• Dominant above 1500 Hz</li>
@@ -53,15 +51,28 @@
           <li>• Detects 0.5-1 dB changes</li>
           <li>• Head shadow creates volume difference</li>
         </ul>
-      </div>
+      </Card>
     </div>
-  </div>
+  </Card>
 
   <EarsDiagram />
 </div>
 
 <script lang="ts">
+  import Card from "./Card.svelte"
   import EarsDiagram from "./EarsDiagram.svelte"
+
+  const RANK_BADGE = [
+    "flex",
+    "h-8",
+    "w-8",
+    "items-center",
+    "justify-center",
+    "rounded-full",
+    "bg-blue-600",
+    "font-bold",
+    "text-white",
+  ].join(" ")
 
   interface Cue {
     rank: string

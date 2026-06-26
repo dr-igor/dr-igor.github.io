@@ -1,6 +1,4 @@
-<div
-  class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 transition-colors duration-300 dark:from-zinc-950 dark:to-neutral-950"
->
+<div class={pageBackground({ class: "transition-colors duration-300" })}>
   <Navbar />
 
   <div class="pt-16">
@@ -20,6 +18,7 @@
   import Navbar from "$lib/components/Navbar.svelte"
   import { createSmoothScroll } from "$lib/lenis"
   import { scroll } from "$lib/stores/scroll.svelte"
+  import { pageBackground } from "$lib/styles/brand"
 
   let { children }: { children: Snippet } = $props()
 

@@ -15,7 +15,7 @@
   <div class="relative mx-auto max-w-4xl px-4 py-16">
     <h1
       in:fly={{ y: 30, duration: 800 }}
-      class="font-display mb-8 bg-gradient-to-r from-purple-700 via-purple-600 to-amber-600 bg-clip-text text-5xl font-bold text-transparent dark:from-purple-400 dark:via-purple-300 dark:to-amber-400 md:text-6xl"
+      class={brandHeading({ size: "sm", class: "mb-8" })}
     >
       About Me
     </h1>
@@ -59,6 +59,7 @@
 <script lang="ts">
   import { fly } from "svelte/transition"
   import { scroll } from "$lib/stores/scroll.svelte"
+  import { brandHeading } from "$lib/styles/brand"
 
   const INTERESTS = [
     "Software Engineering & Development",

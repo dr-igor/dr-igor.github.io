@@ -4,11 +4,9 @@
     checked={theme.isDark}
     onCheckedChange={(checked) => theme.set(checked)}
     aria-label="Toggle dark mode"
-    class="relative h-6 w-11 cursor-pointer rounded-full bg-gray-300 outline-none transition-colors data-[state=checked]:bg-purple-700 dark:bg-zinc-700"
+    class={SWITCH_ROOT}
   >
-    <Switch.Thumb
-      class="block h-5 w-5 translate-x-0.5 rounded-full bg-white shadow-md transition-transform duration-200 will-change-transform data-[state=checked]:translate-x-[22px]"
-    />
+    <Switch.Thumb class={SWITCH_THUMB} />
   </Switch.Root>
   <Moon class="h-4 w-4 text-purple-700 dark:text-purple-400" aria-hidden="true" />
 </div>
@@ -17,4 +15,31 @@
   import { Moon, Sun } from "@lucide/svelte"
   import { Switch } from "bits-ui"
   import { theme } from "$lib/stores/theme.svelte"
+
+  const SWITCH_ROOT = [
+    "relative",
+    "h-6",
+    "w-11",
+    "cursor-pointer",
+    "rounded-full",
+    "bg-gray-300",
+    "outline-none",
+    "transition-colors",
+    "data-[state=checked]:bg-purple-700",
+    "dark:bg-zinc-700",
+  ].join(" ")
+
+  const SWITCH_THUMB = [
+    "block",
+    "h-5",
+    "w-5",
+    "translate-x-0.5",
+    "rounded-full",
+    "bg-white",
+    "shadow-md",
+    "transition-transform",
+    "duration-200",
+    "will-change-transform",
+    "data-[state=checked]:translate-x-[22px]",
+  ].join(" ")
 </script>

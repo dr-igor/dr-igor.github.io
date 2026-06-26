@@ -1,11 +1,12 @@
-<span
-  class="inline-block rounded border px-1.5 py-0.5 align-middle font-mono text-[9.5px] tracking-wider text-gray-700 uppercase dark:text-gray-300"
+<Pill
+  variant="engine"
   style="background: {ENGINE_COLOR[engine]}22; border-color: {ENGINE_COLOR[engine]}"
 >
   {ENGINE_METHOD[engine]}
-</span>
+</Pill>
 
 <script lang="ts">
+  import Pill from "./Pill.svelte"
   import { ENGINE_COLOR, ENGINE_METHOD, type EngineKey } from "./engines"
 
   interface Props {

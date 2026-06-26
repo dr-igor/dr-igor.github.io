@@ -10,6 +10,7 @@ date: "2026-06-25"
   import EnvelopeGlyph from "$lib/components/synthesis/EnvelopeGlyph.svelte"
   import SpectrumGlyph from "$lib/components/synthesis/SpectrumGlyph.svelte"
   import CentroidGlyph from "$lib/components/synthesis/CentroidGlyph.svelte"
+  import GlyphStrip from "$lib/components/synthesis/GlyphStrip.svelte"
   import EnginePill from "$lib/components/synthesis/EnginePill.svelte"
   import LabPill from "$lib/components/synthesis/LabPill.svelte"
   import TagPill from "$lib/components/synthesis/TagPill.svelte"
@@ -49,11 +50,11 @@ Energy is deposited once and the string rings out — **no sustain**, a **bright
 
 9+ stretched partials (B≈0.001), ~4 ms strike + broadband thunk, per-partial decay, double-decay tail; velocity→loudness & brightness together.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Percussive onset + ring-out + faintly stretched partials. That inharmonic stretch is the **"warmth"** that isn't in a pure-harmonic tone.
 
@@ -61,11 +62,11 @@ Percussive onset + ring-out + faintly stretched partials. That inharmonic stretc
 
 Carrier sine + modulator at ~14×, index decays in ~150 ms (the bark), body sine decays over 2–3 s; velocity→index.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="belltube" />
   <CentroidGlyph shape="fallfast" />
-</div>
+</GlyphStrip>
 
 A glassy inharmonic **bell-bark at onset** melting into a near-sine body. Wurlitzer = add a touch of reedy second-harmonic grit.
 
@@ -73,11 +74,11 @@ A glassy inharmonic **bell-bark at onset** melting into a near-sine body. Wurlit
 
 Bright plucked string (KS or rich saw + fast attack), prominent pick/quill click, fast-ish decay, lid/case formants; **velocity does nothing** (the quill plucks the same every time).
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A sharp **quill click** over a thin, bright, dynamically-flat pluck — the absence of velocity response is half its character.
 
@@ -85,11 +86,11 @@ A sharp **quill click** over a thin, bright, dynamically-flat pluck — the abse
 
 Plucked/struck string through a magnetic pickup: narrow bright spectrum, very fast attack, short decay, strong upper-mid; often distorted/wah'd.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Funky, percussive, almost **nasal twang** — the pickup narrows the spectrum and the attack is everything.
 
@@ -97,11 +98,11 @@ Funky, percussive, almost **nasal twang** — the pickup narrows the spectrum an
 
 KS: 12 ms noise burst → tuned delay + lossy lowpass loop; pluck position notches certain harmonics (comb); body + soundhole formants (~100–200 Hz). Nylon = softer burst, darker loop.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Pick attack + **pluck-position comb filtering** + wooden body resonance, dulling as it rings.
 
@@ -109,11 +110,11 @@ Pick attack + **pluck-position comb filtering** + wooden body resonance, dulling
 
 Plucked string, narrower pickup spectrum, long sustain (solid body loses little energy); distortion = waveshaping/clipping that adds harmonics and compresses dynamics; cabinet formants.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Clean: bell-like sustain. Distorted: harmonic saturation + near-infinite sustain — the **clipping**, not the string, is the timbre.
 
@@ -121,11 +122,11 @@ Clean: bell-like sustain. Distorted: harmonic saturation + near-infinite sustain
 
 Low plucked string, strong fundamental + 2nd, short bright attack click, medium decay; finger vs. pick vs. slap changes the onset noise.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Fat fundamental with a **fingered thump or slap snap** on the attack.
 
@@ -133,11 +134,11 @@ Fat fundamental with a **fingered thump or slap snap** on the attack.
 
 Like piano but gentler onset (no hammer), very low inharmonicity (flexible strings), long clean decay, no sustain pedal damping by default.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A **soft pluck** with a long, pure, harmonic ring — cleaner and less percussive than a piano.
 
@@ -145,11 +146,11 @@ A **soft pluck** with a long, pure, harmonic ring — cleaner and less percussiv
 
 Paired strings detuned a few cents → chorus/beating; bright fast pluck; tremolo picking = rapid re-triggers.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Bright pluck with **shimmer from paired strings** beating against each other.
 
@@ -157,11 +158,11 @@ Bright pluck with **shimmer from paired strings** beating against each other.
 
 Plucked string coupled to a drum head: very bright, very fast decay, strong attack transient, slight membrane "plonk".
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Twangy, **percussive, fast-dying** — the drumhead resonance is the giveaway.
 
@@ -169,11 +170,11 @@ Twangy, **percussive, fast-dying** — the drumhead resonance is the giveaway.
 
 Main plucked string + a flat "jawari" bridge that buzzes (waveshaping/added high harmonics) + many sympathetic strings (extra detuned KS voices ringing).
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A **buzzing, sustaining shimmer** — the sympathetic strings keep ringing under the melody.
 
@@ -181,11 +182,11 @@ A **buzzing, sustaining shimmer** — the sympathetic strings keep ringing under
 
 Short bowed-string body but plucked: fast attack, quick decay, body formants, slight pluck noise.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="pluck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A **dry, woody pluck** that dies fast — the orchestral string body without the bow.
 
@@ -199,11 +200,11 @@ The bow feeds energy continuously, so the tone **sustains and can swell**. Stick
 
 Sawtooth → gentle lowpass + body formants (~300–3 kHz); ~80–120 ms bow attack; vibrato ~5–6 Hz, delayed; bow pressure→brightness.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Singing sustained saw with **expressive vibrato**; bow position (sul tasto→dark, sul ponticello→glassy) = move the filter.
 
@@ -211,11 +212,11 @@ Singing sustained saw with **expressive vibrato**; bow position (sul tasto→dar
 
 Same engine, lower range, larger body formants moved down, slightly slower attack, woodier lowpass.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 The bowed-saw identity shifted down with a **rounder, chestier body** resonance.
 
@@ -223,11 +224,11 @@ The bowed-saw identity shifted down with a **rounder, chestier body** resonance.
 
 4–9 detuned saws (±3–12 cents) + timing/phase spread; slow swell; collective vibrato.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="swell" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 The **shimmer of many players** beating — detune + numbers, not a single richer voice.
 
@@ -235,11 +236,11 @@ The **shimmer of many players** beating — detune + numbers, not a single riche
 
 Tremolo = fast amplitude/retrigger flutter; col legno = mostly bow-wood noise (N+E); natural harmonics = near-sine at a node.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Articulation tricks: **flutter, wood-clatter, or a glassy whistle** over the same bowed core.
 
@@ -247,11 +248,11 @@ Articulation tricks: **flutter, wood-clatter, or a glassy whistle** over the sam
 
 Bowed (wheel) drone saws + a buzzing bridge (rhythmic waveshaping) + sympathetic drones.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="flat" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 A droning bowed sound with a **percussive buzz** ticking underneath.
 
@@ -265,11 +266,11 @@ Lips buzz into a tube; the tone **brightens as you blow harder**. The signature 
 
 Sawtooth; fast amp attack; filter env attack slightly LONGER than amp → brightness bloom; velocity→cutoff; delayed vibrato; optional FM/noise rasp burst at onset.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="rise" />
-</div>
+</GlyphStrip>
 
 The **brightness bloom coupled to loudness** is the whole identity — play soft = dull, hard = blazing.
 
@@ -277,11 +278,11 @@ The **brightness bloom coupled to loudness** is the whole identity — play soft
 
 As trumpet, lower, with portamento (slide) between notes; broader bore = slightly rounder.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="rise" />
-</div>
+</GlyphStrip>
 
 Brass bloom plus **glissando slides** connecting pitches.
 
@@ -289,11 +290,11 @@ Brass bloom plus **glissando slides** connecting pitches.
 
 Saw with a darker lowpass (mellower), slower bloom, hand-in-bell = a gentle high-cut formant; wide warm vibrato.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="rise" />
-</div>
+</GlyphStrip>
 
 **Rounder, more distant** brass — the bloom is softer and the top is rolled off.
 
@@ -301,11 +302,11 @@ Saw with a darker lowpass (mellower), slower bloom, hand-in-bell = a gentle high
 
 Low saw, fat fundamental, slow gentle bloom, broad body.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="rise" />
-</div>
+</GlyphStrip>
 
 Brass identity at the bottom: **round, slow, weighty**.
 
@@ -313,11 +314,11 @@ Brass identity at the bottom: **round, slow, weighty**.
 
 Brass core + a strong fixed bandpass formant; Harmon = a sharp peak you can sweep (wah); nasal, thin, buzzy.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="formant" />
   <CentroidGlyph shape="rise" />
-</div>
+</GlyphStrip>
 
 A pinched, **vocal "wah"** — the mute imposes a fixed resonance the open horn doesn't have.
 
@@ -331,11 +332,11 @@ Air columns, but the **bore shape sets the harmonics**: a closed cylinder (clari
 
 Triangle/sine (few harmonics) + filtered breath noise loudest at attack; soft attack; vibrato ~5 Hz.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="trihi" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Almost a pure tone — the **breath noise** is what makes it a flute and not a sine.
 
@@ -343,11 +344,11 @@ Almost a pure tone — the **breath noise** is what makes it a flute and not a s
 
 Flute engine: piccolo = octave up, more breath; recorder = purer, less breath; pan flute = strong breathy chiff at onset.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="trihi" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Variations on near-sine + air; the **amount and color of breath** separates them.
 
@@ -355,11 +356,11 @@ Variations on near-sine + air; the **amount and color of breath** separates them
 
 Vessel (Helmholtz) resonator → essentially a single sine + tiny 2nd harmonic, gentle attack, light breath.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="sine" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 The **purest** wind voice — close to a flutey sine with almost no overtones.
 
@@ -367,11 +368,11 @@ The **purest** wind voice — close to a flutey sine with almost no overtones.
 
 Flute core with heavy breath, pitch bends (meri/kari), and noisy attacks.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="trihi" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 A **breathy, vocal, bending** flute — the noise and pitch inflection carry it.
 
@@ -379,11 +380,11 @@ A **breathy, vocal, bending** flute — the noise and pitch inflection carry it.
 
 Square wave (= odd harmonics), gentle lowpass, medium reedy attack, slight breath, subtle vibrato.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="square" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Hollow and woody because **even harmonics are missing** — the square wave is the shortcut.
 
@@ -391,11 +392,11 @@ Hollow and woody because **even harmonics are missing** — the square wave is t
 
 Sawtooth (conical → full series) + strong vocal formants + plenty of breath; medium attack; growl = add noise/FM.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="formant" />
   <CentroidGlyph shape="rise" />
-</div>
+</GlyphStrip>
 
 Reedy and **vocal** — the formants and breath make it sing; full harmonic series, unlike the clarinet.
 
@@ -403,11 +404,11 @@ Reedy and **vocal** — the formants and breath make it sing; full harmonic seri
 
 Narrow pulse or saw + a strong nasal formant pair (~1–3 kHz), thin and bright, quick reedy attack, vibrato.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="formant" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Pinched and **nasal** — a tight formant on a reedy double-reed buzz.
 
@@ -415,11 +416,11 @@ Pinched and **nasal** — a tight formant on a reedy double-reed buzz.
 
 Low narrow-pulse/saw + low formants, woody, soft attack.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="formant" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 The **dark, woody, slightly comic** double-reed — oboe character moved low.
 
@@ -427,11 +428,11 @@ The **dark, woody, slightly comic** double-reed — oboe character moved low.
 
 Free reeds: saw/square stack, near-instant on, flat sustain, fast off; accordion = two reeds detuned (musette tremolo); vibrato via bellows.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="flat" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Organ-like **flat sustain** with a reedy buzz and, for accordion, that detuned **musette beating**.
 
@@ -445,11 +446,11 @@ Continuously driven and **dead-flat**: instant on, steady hold, fast off, with l
 
 Sum of near-sine partials at drawbar ratios (16′,8′,5⅓′,4′…); rectangular envelope; key-click transient; scanner vibrato / Leslie chorus.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="flat" />
   <SpectrumGlyph shape="organ" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Literal additive synthesis — drawbars are **harmonic faders**; the **absence of dynamics** is the identity.
 
@@ -457,11 +458,11 @@ Literal additive synthesis — drawbars are **harmonic faders**; the **absence o
 
 Stacked stops at octave/fifth ratios; flue = flutey near-sine + a little chiff at onset; principals = brighter saw-ish.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="flat" />
   <SpectrumGlyph shape="organ" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Massive, static, additive — voiced by **stop selection**, with a breathy chiff as pipes speak.
 
@@ -469,11 +470,11 @@ Massive, static, additive — voiced by **stop selection**, with a breathy chiff
 
 Buzzy saw/pulse + formant (the resonator), flat sustain.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="flat" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 The **snarling, buzzy** organ color — a reed, not a flue.
 
@@ -481,11 +482,11 @@ The **snarling, buzzy** organ color — a reed, not a flue.
 
 Drawbars of complex (not pure) tones → brighter, buzzier, thinner; fast vibrato.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="flat" />
   <SpectrumGlyph shape="organ" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Cheap, bright, **reedy 60s organ** — complex-tone partials instead of clean sines.
 
@@ -499,11 +500,11 @@ The textbook **source–filter** instrument: vocal folds make a buzzy **glottal 
 
 Sawtooth/pulse glottal source → 3 high-Q bandpass formants. "ah" ≈ F1 700 / F2 1200; "ee" ≈ 300 / 2300; "oo" ≈ 300 / 870. Vibrato ~5–6 Hz.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="formant" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Pitch and vowel are **independent**: harmonics set pitch, formants set the vowel.
 
@@ -511,11 +512,11 @@ Pitch and vowel are **independent**: harmonics set pitch, formants set the vowel
 
 Several detuned vowel-voices (ensemble) + slow attack + collective vibrato + reverb.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="swell" />
   <SpectrumGlyph shape="formant" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Vowel formants plus **ensemble shimmer** — a section of singers, not one.
 
@@ -523,11 +524,11 @@ Vowel formants plus **ensemble shimmer** — a section of singers, not one.
 
 Filtered noise (no glottal source) shaped by the same formants.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="noiseband" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 Formants without pitch → **unpitched, breathy** vowels.
 
@@ -535,11 +536,11 @@ Formants without pitch → **unpitched, breathy** vowels.
 
 Drone source + one extremely narrow sweepable formant that isolates single upper harmonics.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="flat" />
   <SpectrumGlyph shape="formant" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 A **whistling harmonic** floating over a drone — one formant picking out partials.
 
@@ -553,11 +554,11 @@ Struck stiff bars. A free bar's natural overtones are **inharmonic**, so makers 
 
 Fundamental + overtone at ≈4× (two octaves, "octave tuning") + weak ~9.2×; soft mallet; tube resonator on the fundamental; fast wood decay.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="bars14" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Dark, round, mellow — the **1:4 overtone** sits with the orchestra, so it blends and dies quickly.
 
@@ -565,11 +566,11 @@ Dark, round, mellow — the **1:4 overtone** sits with the orchestra, so it blen
 
 Fundamental + overtone at ≈3× (a twelfth, "quint tuning") + a spike near 5×/7×; harder mallet; short decay.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="bars13" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Bright and cutting — the **1:3 overtone** (clarinet-like) makes it ring out over everything.
 
@@ -577,11 +578,11 @@ Bright and cutting — the **1:3 overtone** (clarinet-like) makes it ring out ov
 
 Aluminium bars, overtone at ≈4×, long decay; motor-driven disc valves → amplitude **tremolo**; pedal sustain.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="bars14" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Shimmering metallic sustain with that **rotating-disc tremolo** — the one tuned-bar instrument that breathes.
 
@@ -589,11 +590,11 @@ Shimmering metallic sustain with that **rotating-disc tremolo** — the one tune
 
 Small steel bars: bright, high, partials **not** well-tuned (audibly inharmonic), short metallic ping.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="inharmhi" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Tiny bright **bell-like ping** — high enough that the inharmonicity reads as sparkle.
 
@@ -601,11 +602,11 @@ Tiny bright **bell-like ping** — high enough that the inharmonicity reads as s
 
 Hammered steel plates over resonators: glockenspiel-ish but **soft, sweet**, gentle attack, longer decay.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="inharmhi" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A **music-box-like** bell tone with a soft, rounded onset.
 
@@ -613,11 +614,11 @@ A **music-box-like** bell tone with a soft, rounded onset.
 
 Plucked metal tine: strong fundamental + a couple of slightly inharmonic partials + a "buzz" overtone; medium decay, body resonance.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="bars14" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Round metallic pluck with a faint **inharmonic buzz** — thumb-piano warmth.
 
@@ -625,11 +626,11 @@ Round metallic pluck with a faint **inharmonic buzz** — thumb-piano warmth.
 
 Struck steel comb tine: bright near-bell partials, fast attack, medium decay, thin and delicate.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="inharmhi" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A small, bright, slightly **inharmonic chime** — sparse and toy-like.
 
@@ -637,11 +638,11 @@ A small, bright, slightly **inharmonic chime** — sparse and toy-like.
 
 Hammered pan note tuned so the first few **harmonics are real** (1,2,3 strong) + metallic shimmer; medium decay.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="saw" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Unusual for metal: a **genuinely harmonic**, singing, shimmering struck tone.
 
@@ -649,11 +650,11 @@ Unusual for metal: a **genuinely harmonic**, singing, shimmering struck tone.
 
 Rubbed glass: near-**sine** fundamental + faint partials, slow swell (driven, not struck), pure.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="swell" />
   <SpectrumGlyph shape="sine" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 An ethereal, almost **pure-sine** sustained tone with a glassy edge.
 
@@ -667,11 +668,11 @@ Strongly **inharmonic** metal. A church bell is deliberately tuned to five parti
 
 Additive: hum (×0.5), prime/strike (×1), tierce (×1.2 = minor 3rd), quint (×1.5), nominal (×2) + higher inharmonics; sharp strike, very long uneven decay (hum lingers).
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="bellchurch" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 The **minor-third tierce** over the strike note is the melancholy "bell" color; the hum rings on after.
 
@@ -679,11 +680,11 @@ The **minor-third tierce** over the strike note is the melancholy "bell" color; 
 
 Upper modes tuned near 2:3:4 so a **strike note** emerges (no real fundamental there); bright metallic attack, long ring.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="belltube" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A clear chimed pitch that **isn't physically the lowest partial** — your ear infers it from the upper modes.
 
@@ -691,11 +692,11 @@ A clear chimed pitch that **isn't physically the lowest partial** — your ear i
 
 Bell partial set, shorter (handbell) or very high & sustained (crotales).
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="bellchurch" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 Same inharmonic bell DNA, scaled in size and ring time.
 
@@ -703,11 +704,11 @@ Same inharmonic bell DNA, scaled in size and ring time.
 
 Two or three clashing inharmonic partials, fast decay, no clear pitch.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="inharmhi" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A **clanky, pitch-ambiguous** hit — a few dissonant metal modes.
 
@@ -715,11 +716,11 @@ A **clanky, pitch-ambiguous** hit — a few dissonant metal modes.
 
 Very dense high inharmonic partials ≈ bright metallic noise + faint pitch, long shimmer.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="sustain" />
   <SpectrumGlyph shape="noisehi" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 A bright **sustained metallic ting** with no definite pitch.
 
@@ -727,11 +728,11 @@ A bright **sustained metallic ting** with no definite pitch.
 
 Dozens of inharmonic partials + noise + a low mallet thump; soft mallet → the sound **builds and shimmers** after the strike (energy spreads between modes); huge decay.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="swell" />
   <SpectrumGlyph shape="inharmlow" />
   <CentroidGlyph shape="rise" />
-</div>
+</GlyphStrip>
 
 A **swelling, shimmering metallic cloud** — the bloom after the hit is the signature.
 
@@ -739,11 +740,11 @@ A **swelling, shimmering metallic cloud** — the bloom after the hit is the sig
 
 Bandpassed white noise + a few ring-modulated square pairs for metallic edge; fast attack, long wash (crash) or pingy stick attack + sustain (ride).
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="noisehi" />
   <CentroidGlyph shape="noise" />
-</div>
+</GlyphStrip>
 
 Broadband **metallic noise**; ring-mod gives the inharmonic "clang" a filter alone can't.
 
@@ -751,11 +752,11 @@ Broadband **metallic noise**; ring-mod gives the inharmonic "clang" a filter alo
 
 Highpassed noise + ring-mod metal; closed = ~40 ms gate, open = long; tight transient.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="noisehi" />
   <CentroidGlyph shape="noise" />
-</div>
+</GlyphStrip>
 
 A short, bright, **metallic chick** — cymbal recipe with a fast gate.
 
@@ -769,11 +770,11 @@ A struck membrane's modes are inharmonic and mostly **unpitched**; pitch comes f
 
 Kettle loads the membrane so prominent modes approach **~1:1.5:2:2.4** (definite pitch); sine-ish partials + short pitch drop + mallet noise; long resonant decay.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="struck" />
   <SpectrumGlyph shape="bars14" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 The **one tunable drum** — near-harmonic loaded modes give it a real, if dark, pitch.
 
@@ -781,11 +782,11 @@ The **one tunable drum** — near-harmonic loaded modes give it a real, if dark,
 
 Sine/triangle with a fast downward **pitch envelope** (e.g., 120→40 Hz in ~50 ms) + a click transient; short body decay.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="sine" />
   <CentroidGlyph shape="fallfast" />
-</div>
+</GlyphStrip>
 
 The **pitch-drop "thump"** — a falling sine is 90% of a kick.
 
@@ -793,11 +794,11 @@ The **pitch-drop "thump"** — a falling sine is 90% of a kick.
 
 Like kick but higher and more resonant: pitched sine + downward bend + a little head noise + body ring.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="sine" />
   <CentroidGlyph shape="fallfast" />
-</div>
+</GlyphStrip>
 
 A **tuned "doom"** with an audible downward bend.
 
@@ -805,11 +806,11 @@ A **tuned "doom"** with an audible downward bend.
 
 A tonal shell (two detuned sines, fast pitch drop) + a burst of **bright noise** (the snares) gated to ~150 ms.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="noiseband" />
   <CentroidGlyph shape="noise" />
-</div>
+</GlyphStrip>
 
 **Tone + noise rattle** together; the noise band is the snare wires.
 
@@ -817,11 +818,11 @@ A tonal shell (two detuned sines, fast pitch drop) + a burst of **bright noise**
 
 Sharp tonal slap (pitched, fast decay) + open/muted variants; tabla adds a pronounced **pitch bend** and clear tuning.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="sine" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 **Hand-drum tone** — pitched membrane with slap articulation; tabla is the most melodic.
 
@@ -829,11 +830,11 @@ Sharp tonal slap (pitched, fast decay) + open/muted variants; tabla adds a prono
 
 Low broadband boom: noise + low sine, fast decay, big body.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="noiseband" />
   <CentroidGlyph shape="fall" />
-</div>
+</GlyphStrip>
 
 A **deep, dry boom** — minimal pitch, maximal body.
 
@@ -847,11 +848,11 @@ No pitch to speak of — these are **noise (or a click) through a filter and a t
 
 A short resonant click: bandpassed noise or a quick sine ping, ~30–60 ms, high-mid.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="sine" />
   <CentroidGlyph shape="flat" />
-</div>
+</GlyphStrip>
 
 A dry **tonal "tock"** — one short resonant pop.
 
@@ -859,11 +860,11 @@ A dry **tonal "tock"** — one short resonant pop.
 
 Highpassed noise burst, ~30–80 ms, soft attack; rhythmic re-triggering makes the groove.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="noisehi" />
   <CentroidGlyph shape="noise" />
-</div>
+</GlyphStrip>
 
 A **filtered noise "chh"** — color and envelope are everything.
 
@@ -871,11 +872,11 @@ A **filtered noise "chh"** — color and envelope are everything.
 
 Bright metallic noise (many tiny jingles) + a head-hit transient; longer shimmer on shakes.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="noisehi" />
   <CentroidGlyph shape="noise" />
-</div>
+</GlyphStrip>
 
 A **jingly metallic swish** over a soft hit.
 
@@ -883,11 +884,11 @@ A **jingly metallic swish** over a soft hit.
 
 Several closely-spaced noise bursts (the "many hands" flam) into a short reverb tail.
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="noiseband" />
   <CentroidGlyph shape="noise" />
-</div>
+</GlyphStrip>
 
 Noise with a **stuttered multi-tap attack** — that's what says "clap" not "snare".
 
@@ -895,11 +896,11 @@ Noise with a **stuttered multi-tap attack** — that's what says "clap" not "sna
 
 Rhythmically amplitude-modulated noise (a train of grains).
 
-<div class="not-prose my-2 flex gap-2">
+<GlyphStrip>
   <EnvelopeGlyph shape="hit" />
   <SpectrumGlyph shape="noiseband" />
   <CentroidGlyph shape="noise" />
-</div>
+</GlyphStrip>
 
 A **rasping, ratcheting** texture — pulsed noise.
 
