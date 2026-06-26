@@ -15,7 +15,7 @@ A modern landing page and blog built with:
 
 Features:
 
-- Light/Dark mode toggle (system-aware, no flash of incorrect theme)
+- Light/Dark mode toggle (system-aware)
 - Fully prerendered static pages (good SEO, no SPA redirect hacks)
 - Scroll and entrance animations
 - Interactive article components
