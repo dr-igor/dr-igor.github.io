@@ -13,4 +13,4 @@ function createLenisStore() {
   }
 }
 
-export const lenisStore = createLenisStore()
+export const lenis = createLenisStore()

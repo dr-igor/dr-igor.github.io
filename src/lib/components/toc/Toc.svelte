@@ -69,10 +69,12 @@
         transition:fade={{ duration: 150 }}
       ></button>
       <nav
+        bind:this={drawerEl}
         id="toc-drawer"
+        tabindex="-1"
         aria-label="Table of contents"
         transition:fly={{ x: -320, duration: 250 }}
-        class="absolute top-0 left-0 flex h-full w-72 max-w-[80%] flex-col gap-2 overflow-y-auto border-r border-gray-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950"
+        class="absolute top-0 left-0 flex h-full w-72 max-w-[80%] flex-col gap-2 overflow-y-auto border-r border-gray-200 bg-white p-4 focus:outline-none dark:border-zinc-800 dark:bg-zinc-950"
       >
         <div class="flex items-center justify-between">
           <span
@@ -167,7 +169,7 @@
   import { untrack } from "svelte"
   import { SvelteSet } from "svelte/reactivity"
   import { fade, fly } from "svelte/transition"
-  import { lenisStore } from "$lib/stores/lenis.svelte"
+  import { lenis } from "$lib/stores/lenis.svelte"
 
   interface Heading {
     el: HTMLElement
@@ -192,6 +194,7 @@
   let activeId = $state<string | undefined>(undefined)
   let collapsed = $state(browser && localStorage.getItem("toc-collapsed") === "true")
   let drawerOpen = $state(false)
+  let drawerEl = $state<HTMLElement | undefined>(undefined)
 
   // Reader-selected depth, seeded once from localStorage or the prop default.
   let selectedDepth = $state(
@@ -218,6 +221,20 @@
 
   $effect(() => {
     if (browser) localStorage.setItem("toc-collapsed", String(collapsed))
+  })
+
+  // While the mobile drawer is open, move focus into it and let Escape close it.
+  $effect(() => {
+    if (!drawerOpen) return
+
+    drawerEl?.focus()
+
+    function onKeydown(event: KeyboardEvent): void {
+      if (event.key === "Escape") drawerOpen = false
+    }
+
+    window.addEventListener("keydown", onKeydown)
+    return () => window.removeEventListener("keydown", onKeydown)
   })
 
   // Scan every heading in the article whenever the rendered content changes.
@@ -275,8 +292,8 @@
     const target = document.getElementById(id)
     if (!target) return
 
-    const lenis = lenisStore.get()
-    if (lenis) lenis.scrollTo(target, { offset: -80 })
+    const instance = lenis.get()
+    if (instance) instance.scrollTo(target, { offset: -80 })
     else target.scrollIntoView({ behavior: "smooth" })
 
     history.replaceState(null, "", `#${id}`)
