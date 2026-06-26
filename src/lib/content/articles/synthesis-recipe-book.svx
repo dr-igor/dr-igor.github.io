@@ -4,6 +4,8 @@ description: "A field guide to building instruments from oscillators: the smalle
 date: "2026-06-25"
 ---
 
+# {title}
+
 <script>
   import EnvelopeGlyph from "$lib/components/synthesis/EnvelopeGlyph.svelte"
   import SpectrumGlyph from "$lib/components/synthesis/SpectrumGlyph.svelte"
@@ -13,7 +15,9 @@ date: "2026-06-25"
   import TagPill from "$lib/components/synthesis/TagPill.svelte"
 </script>
 
-Every entry is a **recipe**, not a reproduction: the smallest set of ingredients that carries an instrument's recognizable identity. The coloured pill on each recipe names its **engine**; the strip under it sketches the recipe symbolically — amplitude envelope, harmonic spectrum, and spectral centroid (brightness) over time relative to the note's pitch. Items marked <LabPill /> are playable in the companion **Instrument Anatomy** tool (Coming Soon).
+What gives the sound produced by a piano it's 'pianitude', distinct from the 'oarganicity' of an organ, the 'violinness' of a violin, or the 'harpacy' of a harp? This page explores the ingredients that give each instrument and instrument class it's acoustic identity, through minimal identifiable synthesis recipes.
+
+Every entry is a recipe, not a reproduction: the smallest set of ingredients that carries an instrument's recognizable identity. The coloured pill on each recipe names its <EnginePill engine="ENGINE" />; the strip under it sketches the recipe symbolically — amplitude envelope, harmonic spectrum, and spectral centroid (brightness) over time relative to the note's pitch. Items marked <LabPill /> are playable in the companion **Instrument Anatomy** tool (Coming Soon).
 
 <h2 id="how-to-read-a-recipe">How to read a recipe</h2>
 

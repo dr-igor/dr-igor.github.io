@@ -1,6 +1,7 @@
-export type EngineKey = "SUB" | "ADD" | "FM" | "KS" | "S-F" | "N+E" | "INH"
+export type EngineKey = "ENGINE" | "SUB" | "ADD" | "FM" | "KS" | "S-F" | "N+E" | "INH"
 
 export const ENGINE_METHOD: Record<EngineKey, string> = {
+  ENGINE: "engine",
   SUB: "subtractive",
   ADD: "additive",
   FM: "fm",
@@ -15,6 +16,7 @@ export const ENGINE_METHOD: Record<EngineKey, string> = {
  * light and dark backgrounds; the pill's text stays neutral for contrast.
  */
 export const ENGINE_COLOR: Record<EngineKey, string> = {
+  ENGINE: "#6b7280",
   SUB: "#3b82f6",
   ADD: "#10b981",
   FM: "#ec4899",
