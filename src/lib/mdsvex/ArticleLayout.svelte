@@ -1,8 +1,8 @@
 <div class={pageBackground()}>
-  <div class="mx-auto max-w-6xl px-4 py-16 lg:flex lg:gap-8">
-    <Toc {contentEl} {depth} />
+  <div class={CONTAINER} style="--toc-floor: {isTocCollapsed ? '2.5rem' : '14rem'}">
+    <Toc {contentEl} {depth} bind:isCollapsed={isTocCollapsed} />
 
-    <article class="min-w-0 max-w-4xl flex-1">
+    <article class="col-start-2 min-w-0 max-w-4xl">
       <header class="mb-12" in:fly={{ y: 20, duration: 600 }}>
         <h1 class={brandHeading({ size: "sm", class: "mb-4" })}>
           {title}
@@ -20,9 +20,30 @@
 
 <script lang="ts">
   import type { Snippet } from "svelte"
+  import { browser } from "$app/environment"
   import { fade, fly } from "svelte/transition"
   import Toc from "$lib/components/toc/Toc.svelte"
   import { brandHeading, pageBackground } from "$lib/styles/brand"
+
+  // A page-centred 3-column grid: the article holds the centre column while the TOC
+  // lives in the left gutter. Above `lg` the left gutter reserves the rail's current
+  // width (`--toc-floor`) so that, as the window narrows, the empty space closes
+  // before the article does; the transition animates that resize and the rail's
+  // arrival. Below `lg` both gutters collapse and the article spans full width.
+  const CONTAINER = [
+    "mx-auto",
+    "grid",
+    "w-full",
+    "grid-cols-[minmax(0,1fr)_minmax(0,56rem)_minmax(0,1fr)]",
+    "gap-x-0",
+    "px-4",
+    "py-16",
+    "transition-[grid-template-columns,column-gap]",
+    "duration-300",
+    "motion-reduce:transition-none",
+    "lg:grid-cols-[minmax(var(--toc-floor),1fr)_minmax(0,56rem)_minmax(0,1fr)]",
+    "lg:gap-x-8",
+  ].join(" ")
 
   const PROSE = [
     "prose",
@@ -67,6 +88,16 @@
   let { title, description, date, depth = 2, children }: Props = $props()
 
   let contentEl = $state<HTMLElement | undefined>(undefined)
+
+  // The rail's collapsed state lives here, not in the TOC, because the page grid
+  // sizes its left gutter from it; the TOC binds to and toggles it.
+  let isTocCollapsed = $state(
+    browser && localStorage.getItem("toc-collapsed") === "true",
+  )
+
+  $effect(() => {
+    if (browser) localStorage.setItem("toc-collapsed", String(isTocCollapsed))
+  })
 
   const formattedDate = $derived(
     new Date(date).toLocaleDateString("en-US", {
