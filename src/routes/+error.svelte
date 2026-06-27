@@ -6,15 +6,10 @@
   <h1 class={brandHeading({ size: "xl", class: "mb-4" })}>
     {page.status}
   </h1>
-  <p class="mb-8 text-lg text-gray-600 dark:text-gray-400">
+  <p class="mb-8 text-lg text-muted">
     {page.error?.message ?? "Something went wrong."}
   </p>
-  <a
-    href="/"
-    class="text-sm font-medium text-purple-700 hover:underline dark:text-purple-400"
-  >
-    Return home
-  </a>
+  <a href="/" class="text-sm font-medium text-accent hover:underline"> Return home </a>
 </div>
 
 <script lang="ts">

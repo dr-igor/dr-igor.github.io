@@ -7,7 +7,7 @@
         <h1 class={brandHeading({ size: "sm", class: "mb-4" })}>
           {title}
         </h1>
-        <p class="mb-2 text-xl text-gray-600 dark:text-gray-400">{description}</p>
+        <p class="mb-2 text-xl text-muted">{description}</p>
         <time class="text-sm text-gray-500 dark:text-gray-500">{formattedDate}</time>
       </header>
 

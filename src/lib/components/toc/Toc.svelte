@@ -406,7 +406,10 @@
 
     const instance = lenis.get()
     if (instance) instance.scrollTo(target, { offset: -80 })
-    else target.scrollIntoView({ behavior: "smooth" })
+    else
+      target.scrollIntoView({
+        behavior: prefersReducedMotion.current ? "auto" : "smooth",
+      })
 
     history.replaceState(null, "", `#${id}`)
   }

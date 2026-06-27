@@ -45,7 +45,7 @@
         <div class="relative flex h-16 items-center justify-center overflow-hidden">
           {#key rotator.index}
             <div
-              class="absolute text-2xl font-medium text-purple-700 dark:text-purple-400 md:text-3xl"
+              class="absolute text-2xl font-medium text-accent md:text-3xl"
               in:fly={{ y: 20, duration: 500 }}
               out:fly={{ y: -20, duration: 500 }}
             >
@@ -55,10 +55,7 @@
         </div>
       </div>
 
-      <p
-        in:fly={{ y: 20, duration: 800, delay: 600 }}
-        class="mb-8 text-lg text-gray-600 dark:text-gray-400"
-      >
+      <p in:fly={{ y: 20, duration: 800, delay: 600 }} class="mb-8 text-lg text-muted">
         A creative space where technology meets art and design
       </p>
     </div>

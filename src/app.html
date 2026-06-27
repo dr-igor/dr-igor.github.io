@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f9fafb" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,6 +21,11 @@
             ? stored === "dark"
             : window.matchMedia("(prefers-color-scheme: dark)").matches
           document.documentElement.classList.toggle("dark", isDark)
+          // Keep Safari's chrome tint correct on the very first paint; the value
+          // mirrors --color-page in app.css (gray-50 / zinc-950).
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute("content", isDark ? "#09090b" : "#f9fafb")
         } catch {
           // localStorage unavailable (e.g. privacy mode); default to light.
         }

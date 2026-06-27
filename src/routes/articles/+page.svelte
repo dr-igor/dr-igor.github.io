@@ -15,10 +15,7 @@
       Articles
     </h1>
 
-    <p
-      in:fade={{ duration: 600, delay: 200 }}
-      class="mb-12 text-xl text-gray-600 dark:text-gray-400"
-    >
+    <p in:fade={{ duration: 600, delay: 200 }} class="mb-12 text-xl text-muted">
       Exploring the intersection of audio, perception, and technology
     </p>
 
@@ -32,7 +29,7 @@
             <h2 class={ARTICLE_TITLE}>
               {article.frontmatter.title}
             </h2>
-            <p class="mb-4 text-gray-600 dark:text-gray-400">
+            <p class="mb-4 text-muted">
               {article.frontmatter.description}
             </p>
             <time class="text-sm text-gray-500 dark:text-gray-500">

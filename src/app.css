@@ -5,9 +5,26 @@
 
 @theme {
   --font-display: "Anta", sans-serif;
+
+  --color-page: var(--color-gray-50);
+  --color-surface: var(--color-white);
+  --color-edge: var(--color-gray-200);
+  --color-muted: var(--color-gray-600);
+  --color-accent: var(--color-purple-700);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --color-page: var(--color-zinc-950);
+  --color-surface: var(--color-zinc-950);
+  --color-edge: var(--color-zinc-800);
+  --color-muted: var(--color-gray-400);
+  --color-accent: var(--color-purple-400);
 }
 
 :root {
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,4 +35,16 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--color-page);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
