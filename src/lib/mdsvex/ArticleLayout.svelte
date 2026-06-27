@@ -2,16 +2,16 @@
   <div class={CONTAINER} style="--toc-floor: {isTocCollapsed ? '2.5rem' : '14rem'}">
     <Toc {contentEl} {depth} bind:isCollapsed={isTocCollapsed} />
 
-    <article class="col-start-2 min-w-0 max-w-4xl">
+    <article bind:this={contentEl} class="col-start-2 min-w-0 max-w-4xl">
       <header class="mb-12" in:fly={{ y: 20, duration: 600 }}>
-        <h1 class={brandHeading({ size: "sm", class: "mb-4" })}>
+        <h1 id="title" class={brandHeading({ size: "sm", class: "mb-4" })}>
           {title}
         </h1>
         <p class="mb-2 text-xl text-muted">{description}</p>
         <time class="text-sm text-gray-500 dark:text-gray-500">{formattedDate}</time>
       </header>
 
-      <div bind:this={contentEl} in:fade={{ duration: 800, delay: 200 }} class={PROSE}>
+      <div in:fade={{ duration: 800, delay: 200 }} class={PROSE}>
         {@render children()}
       </div>
     </article>
@@ -24,6 +24,37 @@
   import { fade, fly } from "svelte/transition"
   import Toc from "$lib/components/toc/Toc.svelte"
   import { brandHeading, pageBackground } from "$lib/styles/brand"
+
+  interface Props {
+    title: string
+    description: string
+    date: string
+    /** How many heading levels the table of contents shows. */
+    depth?: number
+    children: Snippet
+  }
+
+  let { title, description, date, depth = 2, children }: Props = $props()
+
+  let contentEl = $state<HTMLElement | undefined>(undefined)
+
+  // The rail's collapsed state lives here, not in the TOC, because the page grid
+  // sizes its left gutter from it; the TOC binds to and toggles it.
+  let isTocCollapsed = $state(
+    browser && localStorage.getItem("toc-collapsed") === "true",
+  )
+
+  $effect(() => {
+    if (browser) localStorage.setItem("toc-collapsed", String(isTocCollapsed))
+  })
+
+  const formattedDate = $derived(
+    new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+  )
 
   // A page-centred 3-column grid: the article holds the centre column while the TOC
   // lives in the left gutter. Above `lg` the left gutter reserves the rail's current
@@ -75,35 +106,4 @@
     "dark:prose-code:bg-gray-800",
     "dark:prose-code:text-purple-400",
   ].join(" ")
-
-  interface Props {
-    title: string
-    description: string
-    date: string
-    /** How many heading levels the table of contents shows. */
-    depth?: number
-    children: Snippet
-  }
-
-  let { title, description, date, depth = 2, children }: Props = $props()
-
-  let contentEl = $state<HTMLElement | undefined>(undefined)
-
-  // The rail's collapsed state lives here, not in the TOC, because the page grid
-  // sizes its left gutter from it; the TOC binds to and toggles it.
-  let isTocCollapsed = $state(
-    browser && localStorage.getItem("toc-collapsed") === "true",
-  )
-
-  $effect(() => {
-    if (browser) localStorage.setItem("toc-collapsed", String(isTocCollapsed))
-  })
-
-  const formattedDate = $derived(
-    new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
-  )
 </script>

@@ -112,7 +112,7 @@
         <button
           type="button"
           onclick={() => setDepth(effectiveDepth - 1)}
-          disabled={effectiveDepth <= 1}
+          disabled={effectiveDepth <= MIN_DEPTH}
           aria-label="Show fewer heading levels"
           class={DEPTH_BUTTON}
         >
@@ -167,6 +167,94 @@
   import { fade, fly } from "svelte/transition"
   import { extractHeadings, observeActiveHeading } from "./headings"
   import { lenis } from "$lib/stores/lenis.svelte"
+
+  interface Props {
+    /** The rendered article container to scan for headings. */
+    contentEl: HTMLElement | undefined
+    /** Default number of heading levels to show, before any reader override. */
+    depth?: number
+    /** Whether the desktop rail is collapsed; owned by the layout so the page
+     * grid can reclaim the gutter when it changes. */
+    isCollapsed?: boolean
+  }
+
+  let { contentEl, depth = 2, isCollapsed = $bindable(false) }: Props = $props()
+
+  // Only the docked rail exists at desktop widths; below it the rail is off-canvas
+  // and must be inert so its links leave the tab order and accessibility tree.
+  const isDesktop = new MediaQuery("min-width: 1024px", false)
+
+  const motionDuration = (ms: number): number => (prefersReducedMotion.current ? 0 : ms)
+
+  const allHeadings = $derived(contentEl ? extractHeadings(contentEl) : [])
+  const baseLevel = $derived(
+    allHeadings.length > 0
+      ? Math.min(...allHeadings.map((heading) => heading.level))
+      : 3,
+  )
+  const maxDepth = $derived(
+    allHeadings.length > 0
+      ? Math.max(...allHeadings.map((heading) => heading.level)) - baseLevel + 1
+      : 1,
+  )
+
+  // Seeded once from localStorage or the prop, then driven by the reader.
+  let selectedDepth = $state(
+    untrack(() => (browser && Number(localStorage.getItem("toc-depth"))) || depth),
+  )
+  const effectiveDepth = $derived(Math.min(Math.max(selectedDepth, 1), maxDepth))
+  const shownHeadings = $derived(
+    allHeadings.filter((heading) => heading.level < baseLevel + effectiveDepth),
+  )
+
+  let activeId = $state<string | undefined>(undefined)
+  let isDrawerOpen = $state(false)
+  let drawerEl = $state<HTMLElement | undefined>(undefined)
+
+  function setDepth(next: number): void {
+    selectedDepth = Math.min(Math.max(next, 1), maxDepth)
+    if (browser) localStorage.setItem("toc-depth", String(selectedDepth))
+  }
+
+  function goTo(event: MouseEvent, id: string): void {
+    event.preventDefault()
+    activeId = id
+    isDrawerOpen = false
+
+    const target = document.getElementById(id)
+    if (!target) return
+
+    const instance = lenis.get()
+    if (instance) instance.scrollTo(target, { offset: -80 })
+    else
+      target.scrollIntoView({
+        behavior: prefersReducedMotion.current ? "auto" : "smooth",
+      })
+
+    history.replaceState(null, "", `#${id}`)
+  }
+
+  $effect(() => {
+    if (shownHeadings.length === 0) return
+    return observeActiveHeading(shownHeadings, (id) => (activeId = id))
+  })
+
+  // The open drawer is a modal dialog, so focus must move into it and Escape
+  // must close it for keyboard and screen-reader users.
+  $effect(() => {
+    if (!isDrawerOpen) return
+
+    drawerEl?.focus()
+
+    function onKeydown(event: KeyboardEvent): void {
+      if (event.key === "Escape") isDrawerOpen = false
+    }
+
+    window.addEventListener("keydown", onKeydown)
+    return () => window.removeEventListener("keydown", onKeydown)
+  })
+
+  const MIN_DEPTH = 2
 
   const CAPTION = [
     "font-mono",
@@ -347,90 +435,4 @@
     "leading-snug",
     "transition-colors",
   ].join(" ")
-
-  interface Props {
-    /** The rendered article container to scan for headings. */
-    contentEl: HTMLElement | undefined
-    /** Default number of heading levels to show, before any reader override. */
-    depth?: number
-    /** Whether the desktop rail is collapsed; owned by the layout so the page
-     * grid can reclaim the gutter when it changes. */
-    isCollapsed?: boolean
-  }
-
-  let { contentEl, depth = 2, isCollapsed = $bindable(false) }: Props = $props()
-
-  // Only the docked rail exists at desktop widths; below it the rail is off-canvas
-  // and must be inert so its links leave the tab order and accessibility tree.
-  const isDesktop = new MediaQuery("min-width: 1024px", false)
-
-  const motionDuration = (ms: number): number => (prefersReducedMotion.current ? 0 : ms)
-
-  const allHeadings = $derived(contentEl ? extractHeadings(contentEl) : [])
-  const baseLevel = $derived(
-    allHeadings.length > 0
-      ? Math.min(...allHeadings.map((heading) => heading.level))
-      : 2,
-  )
-  const maxDepth = $derived(
-    allHeadings.length > 0
-      ? Math.max(...allHeadings.map((heading) => heading.level)) - baseLevel + 1
-      : 1,
-  )
-
-  // Seeded once from localStorage or the prop, then driven by the reader.
-  let selectedDepth = $state(
-    untrack(() => (browser && Number(localStorage.getItem("toc-depth"))) || depth),
-  )
-  const effectiveDepth = $derived(Math.min(Math.max(selectedDepth, 1), maxDepth))
-  const shownHeadings = $derived(
-    allHeadings.filter((heading) => heading.level < baseLevel + effectiveDepth),
-  )
-
-  let activeId = $state<string | undefined>(undefined)
-  let isDrawerOpen = $state(false)
-  let drawerEl = $state<HTMLElement | undefined>(undefined)
-
-  function setDepth(next: number): void {
-    selectedDepth = Math.min(Math.max(next, 1), maxDepth)
-    if (browser) localStorage.setItem("toc-depth", String(selectedDepth))
-  }
-
-  function goTo(event: MouseEvent, id: string): void {
-    event.preventDefault()
-    activeId = id
-    isDrawerOpen = false
-
-    const target = document.getElementById(id)
-    if (!target) return
-
-    const instance = lenis.get()
-    if (instance) instance.scrollTo(target, { offset: -80 })
-    else
-      target.scrollIntoView({
-        behavior: prefersReducedMotion.current ? "auto" : "smooth",
-      })
-
-    history.replaceState(null, "", `#${id}`)
-  }
-
-  $effect(() => {
-    if (shownHeadings.length === 0) return
-    return observeActiveHeading(shownHeadings, (id) => (activeId = id))
-  })
-
-  // The open drawer is a modal dialog, so focus must move into it and Escape
-  // must close it for keyboard and screen-reader users.
-  $effect(() => {
-    if (!isDrawerOpen) return
-
-    drawerEl?.focus()
-
-    function onKeydown(event: KeyboardEvent): void {
-      if (event.key === "Escape") isDrawerOpen = false
-    }
-
-    window.addEventListener("keydown", onKeydown)
-    return () => window.removeEventListener("keydown", onKeydown)
-  })
 </script>
