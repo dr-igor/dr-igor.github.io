@@ -4,8 +4,8 @@
   <div class="orb {animation} {ORB_BASE} {position} {color}"></div>
 {/snippet}
 
-<div class="relative min-h-screen overflow-hidden">
-  <div class={HERO_BACKDROP} style="transform: translateY({backgroundShift}%)"></div>
+<div class="relative flex min-h-0 grow flex-col">
+  <div class={HERO_BACKDROP}></div>
 
   <div class="pointer-events-none absolute inset-0 overflow-hidden">
     {@render orb("orb-1", "left-1/4 top-1/4", "bg-purple-300/20 dark:bg-purple-600/10")}
@@ -17,10 +17,7 @@
     )}
   </div>
 
-  <div
-    class="relative flex min-h-screen flex-col items-center justify-center px-4"
-    style="opacity: {heroOpacity}"
-  >
+  <div class="relative flex grow flex-col items-center justify-center px-4">
     <div class="mx-auto max-w-4xl text-center">
       <h1
         in:fly={{ y: 50, duration: 800, easing: quintOut }}
@@ -48,6 +45,8 @@
       </p>
     </div>
   </div>
+
+  <p class="relative py-8 text-center text-sm text-muted">2025-2026 © Igor Petrik</p>
 </div>
 
 <script lang="ts">
@@ -57,7 +56,6 @@
   import { page } from "$app/state"
   import { createRotator } from "$lib/rotator.svelte"
   import { seo, SITE_NAME } from "$lib/seo"
-  import { scroll } from "$lib/stores/scroll.svelte"
   import { brandHeading } from "$lib/styles/brand"
 
   const TOPICS = [
@@ -80,9 +78,6 @@
     rotator.start()
     return rotator.stop
   })
-
-  const heroOpacity = $derived(Math.max(0, 1 - scroll.progress / 0.5))
-  const backgroundShift = $derived(scroll.progress * 100)
 
   const HERO_BACKDROP = [
     "absolute",
