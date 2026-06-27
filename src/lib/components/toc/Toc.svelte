@@ -41,7 +41,9 @@
             </button>
           </div>
           {@render depthControl()}
-          {@render tocList()}
+          <div class="min-h-0 overflow-y-auto" data-lenis-prevent>
+            {@render tocList()}
+          </div>
         </nav>
       {/if}
     </div>
@@ -82,6 +84,7 @@
       aria-label="Table of contents"
       transition:fly={{ x: -320, duration: motionDuration(250) }}
       class={DRAWER_NAV}
+      data-lenis-prevent
     >
       <div class="flex items-center justify-between">
         <span class={CAPTION}> Contents </span>
@@ -325,12 +328,18 @@
     "dark:hover:text-purple-400",
   ].join(" ")
 
+  // Cap the panel to the viewport (`top-20` = 5rem, minus ~1rem of bottom breathing
+  // room) and lay it out as a column so the list region — not the aside — becomes the
+  // scroll container; this keeps the inner element's `sticky` pinning intact.
   const RAIL_NAV = [
     "rounded-xl",
     "border",
     "border-gray-200",
     "bg-white/60",
     "p-3",
+    "lg:flex",
+    "lg:max-h-[calc(100dvh-6rem)]",
+    "lg:flex-col",
     "dark:border-zinc-800",
     "dark:bg-zinc-900/60",
   ].join(" ")
