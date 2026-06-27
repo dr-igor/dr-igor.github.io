@@ -1,6 +1,4 @@
-<svelte:head>
-  <title>{page.status} · Igor Labworks</title>
-</svelte:head>
+<MetaTags {...seo(page.url.pathname, { title: String(page.status) })} />
 
 <div class="flex min-h-screen flex-col items-center justify-center px-4 text-center">
   <h1 class={brandHeading({ size: "xl", class: "mb-4" })}>
@@ -13,6 +11,8 @@
 </div>
 
 <script lang="ts">
+  import { MetaTags } from "svelte-meta-tags"
   import { page } from "$app/state"
+  import { seo } from "$lib/seo"
   import { brandHeading } from "$lib/styles/brand"
 </script>

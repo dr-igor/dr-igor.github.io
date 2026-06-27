@@ -1,10 +1,9 @@
-<svelte:head>
-  <title>Articles · Igor Labworks</title>
-  <meta
-    name="description"
-    content="Exploring the intersection of audio, perception, and technology."
-  />
-</svelte:head>
+<MetaTags
+  {...seo(page.url.pathname, {
+    title: "Articles",
+    description: "Exploring the intersection of audio, perception, and technology.",
+  })}
+/>
 
 <div class={pageBackground()}>
   <div class="mx-auto max-w-5xl px-4 py-16">
@@ -44,7 +43,10 @@
 
 <script lang="ts">
   import { fade, fly } from "svelte/transition"
+  import { MetaTags } from "svelte-meta-tags"
+  import { page } from "$app/state"
   import { articles } from "$lib/content/articles"
+  import { seo } from "$lib/seo"
   import { brandHeading, pageBackground } from "$lib/styles/brand"
 
   const ARTICLE_CARD = [

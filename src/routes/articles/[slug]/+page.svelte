@@ -1,7 +1,13 @@
-<svelte:head>
-  <title>{data.frontmatter.title} · Igor Labworks</title>
-  <meta name="description" content={data.frontmatter.description} />
-</svelte:head>
+<MetaTags
+  {...seo(page.url.pathname, {
+    title: data.frontmatter.title,
+    description: data.frontmatter.description,
+    openGraph: {
+      type: "article",
+      article: { publishedTime: data.frontmatter.date },
+    },
+  })}
+/>
 
 {#if article}
   {@const Article = article.component}
@@ -9,7 +15,10 @@
 {/if}
 
 <script lang="ts">
+  import { MetaTags } from "svelte-meta-tags"
+  import { page } from "$app/state"
   import { getArticle } from "$lib/content/articles"
+  import { seo } from "$lib/seo"
   import type { PageProps } from "./$types"
 
   let { data }: PageProps = $props()

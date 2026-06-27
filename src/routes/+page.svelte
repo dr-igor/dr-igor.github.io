@@ -1,10 +1,4 @@
-<svelte:head>
-  <title>Igor Labworks</title>
-  <meta
-    name="description"
-    content="A creative space where technology meets art and design."
-  />
-</svelte:head>
+<MetaTags {...seo(page.url.pathname, { title: SITE_NAME, titleTemplate: "%s" })} />
 
 {#snippet orb(animation: string, position: string, color: string)}
   <div class="orb {animation} {ORB_BASE} {position} {color}"></div>
@@ -65,7 +59,10 @@
 <script lang="ts">
   import { quintOut } from "svelte/easing"
   import { fade, fly } from "svelte/transition"
+  import { MetaTags } from "svelte-meta-tags"
+  import { page } from "$app/state"
   import { createRotator } from "$lib/rotator.svelte"
+  import { seo, SITE_NAME } from "$lib/seo"
   import { scroll } from "$lib/stores/scroll.svelte"
   import { brandHeading } from "$lib/styles/brand"
 

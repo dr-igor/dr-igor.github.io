@@ -1,10 +1,10 @@
-<svelte:head>
-  <title>About · Igor Labworks</title>
-  <meta
-    name="description"
-    content="Igor Petrik — a multidisciplinary maker exploring the intersection of technology, art, and design."
-  />
-</svelte:head>
+<MetaTags
+  {...seo(page.url.pathname, {
+    title: "About",
+    description:
+      "Igor Petrik — a multidisciplinary maker exploring the intersection of technology, art, and design.",
+  })}
+/>
 
 <div class="relative min-h-screen overflow-hidden">
   <div
@@ -58,6 +58,9 @@
 
 <script lang="ts">
   import { fly } from "svelte/transition"
+  import { MetaTags } from "svelte-meta-tags"
+  import { page } from "$app/state"
+  import { seo } from "$lib/seo"
   import { scroll } from "$lib/stores/scroll.svelte"
   import { brandHeading } from "$lib/styles/brand"
 
