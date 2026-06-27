@@ -19,8 +19,8 @@ describe("Instrument.Root", () => {
     const glyphIdx = text.indexOf("GLYPH_TEXT")
     const acousticIdx = text.indexOf("ACOUSTIC_TEXT")
 
-    expect(recipeIdx).toBeGreaterThanOrEqual(0)
-    expect(recipeIdx).toBeLessThan(glyphIdx)
-    expect(glyphIdx).toBeLessThan(acousticIdx)
+    expect(acousticIdx).toBeGreaterThanOrEqual(0)
+    expect(acousticIdx).toBeLessThan(glyphIdx)
+    expect(glyphIdx).toBeLessThan(recipeIdx)
   })
 })
