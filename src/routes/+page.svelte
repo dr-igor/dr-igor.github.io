@@ -30,12 +30,6 @@
       </h1>
 
       <div class="mb-12" in:fade={{ duration: 800, delay: 300 }}>
-        <h2
-          class="mb-8 text-3xl font-semibold text-gray-800 dark:text-gray-100 md:text-4xl"
-        >
-          Coming Soon
-        </h2>
-
         <div class="relative flex h-16 items-center justify-center overflow-hidden">
           {#key rotator.index}
             <div
@@ -66,20 +60,6 @@
   import { scroll } from "$lib/stores/scroll.svelte"
   import { brandHeading } from "$lib/styles/brand"
 
-  const HERO_BACKDROP = [
-    "absolute",
-    "inset-0",
-    "bg-linear-to-br",
-    "from-purple-50",
-    "via-amber-50",
-    "to-purple-100",
-    "dark:from-purple-950/20",
-    "dark:via-zinc-950",
-    "dark:to-amber-950/20",
-  ].join(" ")
-
-  const ORB_BASE = ["absolute", "h-96", "w-96", "rounded-full", "blur-3xl"].join(" ")
-
   const TOPICS = [
     "Software Engineering",
     "Music Science",
@@ -103,6 +83,20 @@
 
   const heroOpacity = $derived(Math.max(0, 1 - scroll.progress / 0.5))
   const backgroundShift = $derived(scroll.progress * 100)
+
+  const HERO_BACKDROP = [
+    "absolute",
+    "inset-0",
+    "bg-linear-to-br",
+    "from-purple-50",
+    "via-amber-50",
+    "to-purple-100",
+    "dark:from-purple-950/20",
+    "dark:via-zinc-950",
+    "dark:to-amber-950/20",
+  ].join(" ")
+
+  const ORB_BASE = ["absolute", "h-96", "w-96", "rounded-full", "blur-3xl"].join(" ")
 </script>
 
 <style>
