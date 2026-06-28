@@ -11,6 +11,9 @@
   --color-edge: var(--color-gray-200);
   --color-muted: var(--color-gray-600);
   --color-accent: var(--color-purple-700);
+
+  --color-scrollbar: var(--color-gray-300);
+  --color-scrollbar-hover: var(--color-gray-400);
 }
 
 .dark {
@@ -21,6 +24,9 @@
   --color-edge: var(--color-zinc-800);
   --color-muted: var(--color-gray-400);
   --color-accent: var(--color-purple-400);
+
+  --color-scrollbar: var(--color-zinc-700);
+  --color-scrollbar-hover: var(--color-zinc-600);
 }
 
 :root {
@@ -36,6 +42,38 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--color-page);
+}
+
+/* Theme-consistent scrollbars (Firefox / standards) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar) transparent;
+}
+
+/* Theme-consistent scrollbars (WebKit / Blink) */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-hover);
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
