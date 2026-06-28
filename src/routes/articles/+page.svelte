@@ -49,6 +49,14 @@
   import { seo } from "$lib/seo"
   import { brandHeading, pageBackground } from "$lib/styles/brand"
 
+  function formatDate(date: string): string {
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  }
+
   const ARTICLE_CARD = [
     "rounded-xl",
     "border",
@@ -67,18 +75,8 @@
     "mb-3",
     "text-3xl",
     "font-bold",
-    "text-gray-900",
+    "text-muted",
     "transition-colors",
-    "hover:text-purple-600",
-    "dark:text-gray-100",
-    "dark:hover:text-purple-400",
+    "hover:text-accent",
   ].join(" ")
-
-  function formatDate(date: string): string {
-    return new Date(date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
-  }
 </script>

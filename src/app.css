@@ -6,24 +6,30 @@
 @theme {
   --font-display: "Anta", sans-serif;
 
-  --color-page: var(--color-gray-50);
-  --color-surface: var(--color-white);
-  --color-edge: var(--color-gray-200);
-  --color-muted: var(--color-gray-600);
-  --color-accent: var(--color-purple-700);
+  --color-page: oklch(0.985 0.004 215);
+  --color-surface: oklch(1 0 215);
+  --color-edge: oklch(0.91 0.008 215);
+  --color-muted: oklch(0.385 0.03 349);
+  --color-accent: oklch(0.55 0.15 203);
+
+  --color-grad-from: oklch(0.6 0.21 318);
+  --color-grad-via: oklch(0.61 0.21 197);
+  --color-grad-to: oklch(0.62 0.2 41);
 
   --color-scrollbar: var(--color-gray-300);
   --color-scrollbar-hover: var(--color-gray-400);
 }
 
 .dark {
-  color-scheme: dark;
+  --color-page: oklch(0.155 0.012 215);
+  --color-surface: oklch(0.09 0.012 215);
+  --color-edge: oklch(0.14 0.014 215);
+  --color-muted: oklch(0.755 0.018 349);
+  --color-accent: oklch(0.74 0.126 203);
 
-  --color-page: var(--color-zinc-950);
-  --color-surface: var(--color-zinc-950);
-  --color-edge: var(--color-zinc-800);
-  --color-muted: var(--color-gray-400);
-  --color-accent: var(--color-purple-400);
+  --color-grad-from: oklch(0.8 0.2 318);
+  --color-grad-via: oklch(0.8 0.2 197);
+  --color-grad-to: oklch(0.8 0.2 41);
 
   --color-scrollbar: var(--color-zinc-700);
   --color-scrollbar-hover: var(--color-zinc-600);
@@ -77,6 +83,7 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

@@ -4,15 +4,13 @@ export const brandHeading = tv({
   base: [
     "font-display",
     "bg-linear-to-r",
-    "from-purple-700",
-    "via-purple-600",
-    "to-amber-600",
+    "from-grad-from",
+    "via-grad-via",
+    "to-grad-to",
     "bg-clip-text",
     "font-bold",
     "text-transparent",
-    "dark:from-purple-400",
-    "dark:via-purple-300",
-    "dark:to-amber-400",
+    "w-fit",
   ],
   variants: {
     size: {

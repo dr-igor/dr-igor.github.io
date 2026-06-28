@@ -8,13 +8,9 @@
   <div class={HERO_BACKDROP}></div>
 
   <div class="pointer-events-none absolute inset-0 overflow-hidden">
-    {@render orb("orb-1", "left-1/4 top-1/4", "bg-purple-300/20 dark:bg-purple-600/10")}
-    {@render orb("orb-2", "right-1/4 top-1/3", "bg-amber-300/20 dark:bg-amber-600/10")}
-    {@render orb(
-      "orb-3",
-      "bottom-1/4 left-1/3",
-      "bg-purple-400/20 dark:bg-purple-500/10",
-    )}
+    {@render orb("orb-1", "left-1/4 top-1/4", "bg-grad-from/20")}
+    {@render orb("orb-2", "right-1/4 top-1/3", "bg-grad-to/20")}
+    {@render orb("orb-3", "bottom-1/4 left-1/3", "bg-grad-via/20")}
   </div>
 
   <div class="relative flex grow flex-col items-center justify-center px-4">
@@ -83,12 +79,9 @@
     "absolute",
     "inset-0",
     "bg-linear-to-br",
-    "from-purple-50",
-    "via-amber-50",
-    "to-purple-100",
-    "dark:from-purple-950/20",
-    "dark:via-zinc-950",
-    "dark:to-amber-950/20",
+    "from-grad-from/10",
+    "via-grad-via/10",
+    "to-grad-to/10",
   ].join(" ")
 
   const ORB_BASE = ["absolute", "h-96", "w-96", "rounded-full", "blur-3xl"].join(" ")
